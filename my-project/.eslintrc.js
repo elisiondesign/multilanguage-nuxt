@@ -9,9 +9,14 @@ module.exports = {
   },
   extends: [
     '@nuxtjs',
+    'jest',
     'plugin:nuxt/recommended'
   ],
   // add your custom rules here
   rules: {
+  },
+  globals: {
+    'jest/globals': true,
+    jasmine: true
   }
 }
