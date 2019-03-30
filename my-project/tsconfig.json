@@ -2,7 +2,7 @@
   "extends": "@nuxt/typescript",
   "compilerOptions": {
     "experimentalDecorators": true,
-    "lib": [ "es2015" ],
+    "lib": [ "es2015", "dom" ],
     "moduleResolution": "node",
     "noImplicitAny": false,
     "strict": false,
