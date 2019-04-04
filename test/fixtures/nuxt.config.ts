@@ -1,3 +1,5 @@
+const modulePath = require('../../src/index');
+
 export default {
   env: {},
   head: {
@@ -12,10 +14,48 @@ export default {
     ]
   },
   loading: { color: "#3B8070" },
-  css: ["~/assets/css/main.css"],
-  build: {},
+  build: {
+    extend (config: any, { isDev }: any) {
+      if (isDev) {
+        config.devtool = 'eval-source-map'  // Something you like
+      }
+    }
+  },
   modules: [
     "@nuxtjs/axios",
+    [modulePath, {
+      seo: true,
+      baseUrl: 'nuxt-app.localhost',
+      locales: [
+        {
+          code: 'en',
+          iso: 'en-US',
+          name: 'English'
+        },
+        {
+          code: 'fr',
+          iso: 'fr-FR',
+          name: 'Français'
+        }
+      ],
+      defaultLocale: 'en',
+      lazy: false,
+      vueI18n: {
+        messages: {
+          fr: {
+            home: 'Accueil',
+            about: 'À propos',
+            posts: 'Articles'
+          },
+          en: {
+            home: 'Homepage',
+            about: 'About us',
+            posts: 'Posts'
+          }
+        },
+        fallbackLocale: 'en'
+      }
+    }]
   ],
-  axios: {}
+  axios: {},
 }

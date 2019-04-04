@@ -10,10 +10,15 @@
     "nuxt-ts": "2.4.5",
     "vuex-class": "0.3.2",
     "vue-i18n": "^8.8.2",
-    "vue-i18n-extensions": "^0.2.1"
+    "vue-i18n-extensions": "^0.2.1",
+    "@kazupon/vue-i18n-loader": "^0.3.0",
+    "acorn": "^6.1.1",
+    "acorn-walk": "^6.1.1",
+    "cookie": "^0.3.1",
+    "js-cookie": "^2.2.0"
   },
   "scripts": {
-    "dev": "nuxt-ts ./src",
+    "dev": "nuxt-ts ./test/fixtures",
     "build": "nuxt-ts build",
     "start": "nuxt-ts start",
     "generate": "nuxt-ts generate",
