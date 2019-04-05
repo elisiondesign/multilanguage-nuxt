@@ -17,7 +17,8 @@
   @Component
   export default class extends Vue {
     mounted() {
-      console.log(this.$i18n);
+      console.log(this.$aa);
+      console.log(this.$ab);
     }
   }
 </script>

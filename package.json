@@ -18,7 +18,7 @@
     "vuex-class": "0.3.2"
   },
   "scripts": {
-    "dev": "nuxt-ts ./test/fixtures",
+    "dev": "nuxt-ts test/fixtures",
     "build": "nuxt-ts build",
     "start": "nuxt-ts start",
     "generate": "nuxt-ts generate",
@@ -52,5 +52,6 @@
     "request": "^2.88.0",
     "request-promise-native": "^1.0.7",
     "vue-jest": "^3.0.3"
+
   }
 }
