@@ -66,7 +66,7 @@ middleware['i18n'] = async ({ app, req, res, route, store, redirect, isHMR }) =>
     }
   }
 
-  const { useCookie, cookieKey, alwaysRedirect, fallbackLocale } = detectBrowserLanguage
+  const { useCookie, cookieKey, alwaysRedirect, fallbakLocale } = detectBrowserLanguage
 
   const switchLocale = async (newLocale) => {
     // Abort if different domains option enabled

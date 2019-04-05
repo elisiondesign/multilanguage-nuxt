@@ -1,10 +1,26 @@
 {
   "extends": "@nuxt/typescript",
   "compilerOptions": {
-    "baseUrl": ".",
+    "experimentalDecorators": true,
+    "lib": [ "es2015", "dom" ],
+    "moduleResolution": "node",
+    "noImplicitAny": false,
+    "strict": false,
+    "noUnusedLocals": false,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    "baseUrl": "..",
+    "esModuleInterop": true,
     "types": [
+      "@nuxt/vue-app",
+      "@types/jest",
       "@types/node",
-      "@nuxt/vue-app"
-    ]
+      "@types/webpack-env"
+    ],
+    "paths": {
+      "~/*": ["./*"],
+      "~": ["./"],
+      "~types": ["../../types"]
+    }
   }
 }
