@@ -12,29 +12,7 @@ export default async ({ app, route, store, req }, inject) => {
   <% if (options.vuex) { %>
     // Register Vuex module
     if (store) {
-      store.registerModule(vuex.moduleName, {
-        namespaced: true,
-        state: () => ({
-          locale: '',
-          messages: {}
-        }),
-        actions: {
-          setLocale ({ commit }, locale) {
-            commit(vuex.mutations.setLocale, locale)
-          },
-          setMessages ({ commit }, messages) {
-            commit(vuex.mutations.setMessages, messages)
-          }
-        },
-        mutations: {
-          [vuex.mutations.setLocale] (state, locale) {
-            state.locale = locale
-          },
-          [vuex.mutations.setMessages] (state, messages) {
-            state.messages = messages
-          }
-        }
-      }, { preserveState: vuex.preserveState })
+      registerStoreModule(store, vuex)
     }
   <% } %>
 
@@ -49,13 +27,6 @@ export default async ({ app, route, store, req }, inject) => {
     app.$t = app.i18n.t
   }
 
-
-  if (store && store.state.localeDomains) {
-    app.i18n.locales.forEach(locale => {
-      locale.domain = store.state.localeDomains[locale.code];
-    })
-  }
-
   let locale = app.i18n.defaultLocale || null
 
   app.i18n.locale = locale;
@@ -63,6 +34,37 @@ export default async ({ app, route, store, req }, inject) => {
   // Sync Vuex
   syncVuex(vuex, store, locale, app.i18n.getLocaleMessage(locale))
 
+}
+
+/**
+ * Generate new Vuex instance
+ * @param store
+ * @param vuex
+ */
+function registerStoreModule(store, vuex) {
+  store.registerModule(vuex.moduleName, {
+    namespaced: true,
+    state: () => ({
+      locale: '',
+      messages: {}
+    }),
+    actions: {
+      setLocale ({ commit }, locale) {
+        commit(vuex.mutations.setLocale, locale)
+      },
+      setMessages ({ commit }, messages) {
+        commit(vuex.mutations.setMessages, messages)
+      }
+    },
+    mutations: {
+      [vuex.mutations.setLocale] (state, locale) {
+        state.locale = locale
+      },
+      [vuex.mutations.setMessages] (state, messages) {
+        state.messages = messages
+      }
+    }
+  }, { preserveState: vuex.preserveState })
 }
 
 /**

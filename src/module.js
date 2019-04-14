@@ -12,12 +12,7 @@ const {
   LOCALE_ISO_KEY,
   LOCALE_DOMAIN_KEY,
   LOCALE_FILE_KEY,
-  STRATEGIES,
-  COMPONENT_OPTIONS_KEY,
-  getLocaleCodes,
-  getLocaleFromRoute,
-  getForwarded,
-  getHostname
+  STRATEGIES
 } = require('./helpers/constants')
 
 const { makeRoutes } = require('./helpers/routes')
@@ -45,11 +40,6 @@ module.exports = function (moduleOptions) {
     LOCALE_DOMAIN_KEY,
     LOCALE_FILE_KEY,
     STRATEGIES,
-    COMPONENT_OPTIONS_KEY,
-    getLocaleCodes,
-    getLocaleFromRoute,
-    getForwarded,
-    getHostname,
     isSpa: this.options.mode === 'spa'
   }
 
@@ -67,29 +57,21 @@ module.exports = function (moduleOptions) {
   const pluginsPath = join(__dirname, PLUGINS_DIR)
   const templatesPath = join(__dirname, TEMPLATES_DIR)
 
-  this.addPlugin({
-    src: resolve(pluginsPath, 'main.js'),
-    fileName: join(ROOT_DIR, 'plugin.main.js'),
-    options: templatesOptions
-  })
+  // Add plugins
+  for (const pluginName of ['main', 'routing']) {
+    this.addPlugin({
+      src: resolve(pluginsPath, `${pluginName}.js`),
+      fileName: join(ROOT_DIR, `plugin.${pluginName}.js`),
+      options: templatesOptions
+    })
+  }
 
-  this.addPlugin({
-    src: resolve(pluginsPath, 'routing.js'),
-    fileName: join(ROOT_DIR, 'plugin.routing.js'),
-    options: templatesOptions
-  })
 
-  // // Templates
-  // this.addTemplate({
-  //   src: resolve(templatesPath, 'middleware.js'),
-  //   fileName: join('template.middleware.js'),
-  //   options: templatesOptions
-  // })
-
-  for (const file of readdirSync(templatesPath)) {
+  // Add templates
+  for (const templatePath of readdirSync(templatesPath)) {
     this.addTemplate({
-      src: resolve(templatesPath, file),
-      fileName: join(ROOT_DIR, file),
+      src: resolve(templatesPath, templatePath),
+      fileName: join(ROOT_DIR, templatePath),
       options: templatesOptions
     })
   }

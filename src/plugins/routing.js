@@ -3,6 +3,14 @@ import Vue from 'vue'
 
 const routesNameSeparator = '<%= options.routesNameSeparator %>'
 
+/**
+ * Override Vuei18n 'localePath' function
+ * Prefix nuxt link with locale
+ *
+ * @param i18nPath
+ * @param routerPath
+ * @returns {function(*=, *=): *}
+ */
 function localePathFactory (i18nPath, routerPath) {
   const STRATEGIES = <%= JSON.stringify(options.STRATEGIES) %>
   const STRATEGY = '<%= options.strategy %>'
@@ -45,7 +53,12 @@ function localePathFactory (i18nPath, routerPath) {
   }
 }
 
-
+/**
+ * Override Vuei18n 'localePath' function
+ * Change current locale
+ *
+ * @returns {switchLocalePath}
+ */
 function switchLocalePathFactory () {
 
   return function switchLocalePath (locale) {
@@ -65,6 +78,12 @@ function switchLocalePathFactory () {
   }
 }
 
+/**
+ * Retreive basename from path string
+ *
+ * @param contextRoute
+ * @returns {getRouteBaseName}
+ */
 function getRouteBaseNameFactory (contextRoute) {
 
   const routeGetter  = contextRoute ? route => route || contextRoute :
