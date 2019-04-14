@@ -1,4 +1,4 @@
-const modulePath = require('../../src/module');
+const modulePath = require('../../src/module')
 
 export default {
   env: {},
@@ -8,7 +8,7 @@ export default {
     resourceHints: false
   },
   modules: [
-    "@nuxtjs/axios",
+    '@nuxtjs/axios',
     [modulePath, {
       seo: true,
       baseUrl: 'nuxt-app.localhost',
@@ -43,5 +43,5 @@ export default {
       }
     }]
   ],
-  axios: {},
+  axios: {}
 }

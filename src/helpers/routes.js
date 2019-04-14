@@ -1,7 +1,6 @@
 const {
   MODULE_NAME,
   STRATEGIES } = require('./constants')
-const { extractComponentOptions } = require('./components')
 const { getPageOptions, getLocaleCodes } = require('./utils')
 
 exports.makeRoutes = (baseRoutes, {
@@ -10,7 +9,6 @@ exports.makeRoutes = (baseRoutes, {
   routesNameSeparator,
   defaultLocaleRouteNameSuffix,
   strategy,
-  parsePages,
   pages,
   encodePaths,
   pagesDir,
@@ -21,19 +19,7 @@ exports.makeRoutes = (baseRoutes, {
 
   const buildLocalizedRoutes = (route, routeOptions = {}, isChild = false) => {
     const routes = []
-    let pageOptions
-
-    // Extract i18n options from page
-    if (parsePages) {
-      pageOptions = extractComponentOptions(route.component)
-    } else {
-      pageOptions = getPageOptions(route, pages, locales, pagesDir)
-    }
-
-    // Skip route if i18n is disabled on page
-    if (pageOptions === false) {
-      return route
-    }
+    const pageOptions = getPageOptions(route, pages, locales, pagesDir)
 
     // Component's specific options
     const componentOptions = {
@@ -55,7 +41,8 @@ exports.makeRoutes = (baseRoutes, {
     // Generate routes for component's supported locales
     for (let i = 0, length1 = componentOptions.locales.length; i < length1; i++) {
       const locale = componentOptions.locales[i]
-      let { name, path } = route
+      let { path } = route
+      const { name } = route
       const localizedRoute = { ...route }
 
       // Skip if locale not in module's configuration
