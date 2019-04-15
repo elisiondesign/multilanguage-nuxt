@@ -10,7 +10,7 @@ multilanguage-nuxt takes care of internalization of your page (by integrating vu
   * sitemap link generation with regards to mutlilanguage content
 
 
-This module is heavily inspired by the (nuxt-i18n)[https://github.com/nuxt-community/nuxt-i18n] module for internalization, but several additional options that are mainly
+This module is heavily inspired by the [nuxt-i18n](https://github.com/nuxt-community/nuxt-i18n) module for internalization, but several additional options that are mainly
 aimed at maximizing the SEO and page rank score. While some functions are the same or similar, there are many that are not present in this module (and vice versa).
 As a rule of thumb, if you need more options, support of multiple domains, lazyloading or overriding options from inside the components, you should opt for the nuxt-i18n module.
 However, if your main focus is the SEO, this module is likely the choice.
