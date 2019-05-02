@@ -62,7 +62,8 @@ The minimal configuration requires you to provide some translations and define s
 When creating a link, it is necessary to build the proper URL prefixed with current locale.
 For convenience, the module registers several global mixins that makes this a breeze:
 
-- `localePath`
+-  `localePath` :white_check_mark:
+
 Returns the localized URL for a given page. The first parameter can be either the name of the route or an object for more complex routes. 
 A locale code can be passed as the second parameter to generate a link for a specific language:
 

@@ -45,7 +45,8 @@ export default {
     ],
     axios: {},
     plugins: [
-        "~/plugins/i18n-test"
+        "~/plugins/i18n-test",
+        "~/plugins/myplugin"
     ],
     extend(config: any, ctx: any) {
         if (ctx.isDev) {
