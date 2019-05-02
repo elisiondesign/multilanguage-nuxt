@@ -4,8 +4,9 @@
     "experimentalDecorators": true,
     "lib": [ "es2015", "dom" ],
     "moduleResolution": "node",
-    "noImplicitAny": false,
-    "strict": false,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "strict": true,
     "noUnusedLocals": false,
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
@@ -15,12 +16,14 @@
       "@nuxt/vue-app",
       "@types/jest",
       "@types/node",
-      "@types/webpack-env"
+      "@types/webpack-env",
+      "./types"
     ],
+
     "paths": {
       "~/*": ["./*"],
       "~": ["./"],
       "~types": ["../../types"]
     }
-  }
+  },
 }

@@ -1,5 +1,4 @@
 import middleware from '../middleware'
-
 middleware['i18n'] = async ({ app, route, store, redirect, isHMR }) => {
   // Ditch Hot Module Reloading
   if (isHMR) {

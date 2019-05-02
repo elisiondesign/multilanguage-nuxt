@@ -22,11 +22,5 @@ import LangSwitcher from '../components/LangSwitcher.vue'
   }
 })
 export default class extends Vue {
-  s = 1;
-
-  mounted() {
-    console.log('fire');
-  //   console.log(this.$ab);
-  }
 }
 </script>
