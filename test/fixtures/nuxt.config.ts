@@ -44,7 +44,7 @@ export default {
         }]
     ],
     axios: {},
-    extend(config, ctx) {
+    extend(config: any, ctx: any) {
         if (ctx.isDev) {
             config.devtool = 'eval-source-map'
         }

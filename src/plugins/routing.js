@@ -103,7 +103,7 @@ function getRouteBaseNameFactory (contextRoute) {
 Vue.mixin({
   methods: {
     localePath: localePathFactory('$i18n', '$router'),
-    switchLocalePath: switchLocalePathFactory(),
+    changeLanguage: switchLocalePathFactory(),
     getRouteBaseName: getRouteBaseNameFactory()
   }
 })
@@ -111,6 +111,6 @@ Vue.mixin({
 
 export default ({ app, route }) => {
   app.localePath = localePathFactory('i18n', 'router')
-  app.switchLocalePath = switchLocalePathFactory(),
+  app.changeLanguage = switchLocalePathFactory(),
   app.getRouteBaseName = getRouteBaseNameFactory(route)
 }

@@ -16,7 +16,7 @@ import {
   Component,
   Vue
 } from 'nuxt-property-decorator'
-import { NuxtVueI18n } from '../../../types/vue';
+import { NuxtVueI18n } from '../../../@types/vue';
 
 @Component
 export default class extends Vue {
