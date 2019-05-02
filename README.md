@@ -75,7 +75,7 @@ A locale code can be passed as the second parameter to generate a link for a spe
 </nuxt-link>
 ```
 
-- `switchLocalePath` 
+- `changeLanguage` 
 Returns a link to the current page in another language. If the url consists of dynamically generated bits,
 they will be translated as well given that the translation was provided in the configuration (see advanced usage for more information).
 You may suppress this effect by passing __false__ as the second argument.

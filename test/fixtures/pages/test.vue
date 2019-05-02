@@ -2,9 +2,15 @@
   <section>
     <lang-switcher />
     <div class="cards">
-      <nuxt-link to="/">
-        test
-      </nuxt-link>
+      <nuxt-link :to="localePath('index', 'en')">
+        index, always english
+      </nuxt-link> <br>
+      <nuxt-link :to="localePath('index')">
+        {{ $t('home') }}
+      </nuxt-link> <br>
+      <nuxt-link :to="localePath({ name: 'index', params: { slug: 'cat' } })">
+        {{ $t('home') }} as object
+      </nuxt-link> <br>
     </div>
   </section>
 </template>

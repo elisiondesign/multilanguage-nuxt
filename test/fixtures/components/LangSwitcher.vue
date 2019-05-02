@@ -4,7 +4,7 @@
       v-for="(locale, index) in getLocales"
       :key="index"
       :exact="true"
-      :to="switchLocalePath(locale.code)"
+      :to="changeLanguage(locale.code)"
     >
       {{ locale.code }}
     </nuxt-link>
@@ -22,18 +22,18 @@ import { NuxtVueI18n } from '../../../types/vue';
 export default class extends Vue {
 
   get getLocales() {
-    const locales = [];
+    const locales: NuxtVueI18n.Options.LocaleObject[] = [];
 
     this.$i18n.locales.forEach(locale => {
-      let code : string;
+      let locelaObject : NuxtVueI18n.Options.LocaleObject;
       if ((<NuxtVueI18n.Options.LocaleObject>locale).code) {
-        code = (<NuxtVueI18n.Options.LocaleObject>locale).code;
+        locelaObject = (<NuxtVueI18n.Options.LocaleObject>locale);
       } else {
-        code = <string>locale;
+        locelaObject.code = <string>locale;
       }
 
-      if (code !== this.$i18n.locale) {
-        locales.push(locale);
+      if (locelaObject.code !== this.$i18n.locale) {
+        locales.push(locelaObject);
       }
     });
 

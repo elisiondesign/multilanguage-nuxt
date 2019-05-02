@@ -1,24 +1,26 @@
 <template>
   <section>
-    <h1 class="header">
-      Nuxt TypeScript Starter
-    </h1>
+    <lang-switcher />
     <div class="cards">
-      <nuxt-link to="/test">
+      <nuxt-link :to="localePath('test')">
         test
       </nuxt-link>
-      main
     </div>
   </section>
 </template>
 
-<style scoped>
-.header {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-}
+<script lang="ts">
+import {
+  Component,
+  Vue
+} from 'nuxt-property-decorator'
+import LangSwitcher from '../components/LangSwitcher.vue'
 
-.cards {
-  display: flex;
-  flex-wrap: wrap;
+@Component({
+  components: {
+    LangSwitcher
+  }
+})
+export default class extends Vue {
 }
-</style>
+</script>
