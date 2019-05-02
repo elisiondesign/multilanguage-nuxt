@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import * as types from '../index'
+import * as types from '../vue/index'
 
 const vm = new Vue()
 const locale = 'en'

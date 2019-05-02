@@ -41,7 +41,7 @@ declare module 'vue/types/options' {
   interface ComponentOptions<V extends Vue> {
     head?: MetaInfo | (() => MetaInfo)
     layout?: string | ((ctx: Context) => string)
-    middleware?: string | string[]
+    // middleware?: string | string[]
     scrollToTop?: boolean
     transition?: string | Transition | ((to: Route, from: Route) => string)
     watchQuery?: boolean | string[]
