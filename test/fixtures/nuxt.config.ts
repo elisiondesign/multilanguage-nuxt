@@ -44,6 +44,9 @@ export default {
         }]
     ],
     axios: {},
+    plugins: [
+        "~/plugins/i18n-test"
+    ],
     extend(config: any, ctx: any) {
         if (ctx.isDev) {
             config.devtool = 'eval-source-map'

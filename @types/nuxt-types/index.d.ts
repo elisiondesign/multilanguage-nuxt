@@ -4,7 +4,7 @@ import { Dictionary } from 'vue-router/types/router';
 import { Store } from 'vuex'
 import { MetaInfo } from 'vue-meta'
 
-declare module 'vue/types/options' {
+declare module 'nuxt/types' {
   interface Context {
     app: Vue,
     isClient: boolean,

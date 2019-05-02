@@ -10,7 +10,7 @@
     "noUnusedLocals": false,
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
-    "baseUrl": "..",
+    "baseUrl": ".",
     "esModuleInterop": true,
     "typeRoots": ["node_modules", "@types"],
     "types": [
@@ -18,12 +18,18 @@
       "@types/jest",
       "@types/node",
       "@types/webpack-env",
-      "nuxt"
-    ],
-    "paths": {
-      "~/*": ["./*"],
-      "~": ["./"],
-      "~types": ["../../types"]
-    }
+      "nuxt-types",
+      "vue-types",
+      "multilanguage-nuxt"
+    ]
   },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "test/**/*.ts",
+    "test/**/*.tsx",
+    "@types/**/*.ts",
+  ],
+
 }
