@@ -25,7 +25,7 @@ export default class extends Vue {
     const locales: NuxtVueI18n.Options.LocaleObject[] = [];
 
     this.$i18n.locales.forEach(locale => {
-      let locelaObject : NuxtVueI18n.Options.LocaleObject;
+      let locelaObject : NuxtVueI18n.Options.LocaleObject = { code: ''};
       if ((<NuxtVueI18n.Options.LocaleObject>locale).code) {
         locelaObject = (<NuxtVueI18n.Options.LocaleObject>locale);
       } else {

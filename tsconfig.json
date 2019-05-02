@@ -12,14 +12,14 @@
     "resolveJsonModule": true,
     "baseUrl": "..",
     "esModuleInterop": true,
+    "typeRoots": ["node_modules", "@types"],
     "types": [
       "@nuxt/vue-app",
       "@types/jest",
       "@types/node",
       "@types/webpack-env",
-      "./types"
+      "vue"
     ],
-
     "paths": {
       "~/*": ["./*"],
       "~": ["./"],

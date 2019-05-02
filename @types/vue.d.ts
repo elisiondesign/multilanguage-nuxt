@@ -48,8 +48,8 @@ declare namespace NuxtVueI18n {
           differentDomains: boolean;
           forwardedHost: boolean;
           routesNameSeparator: string;
-          beforeLanguageSwitch: () => any;
-          onLanguageSwitched: () => any;
+          beforeLanguageSwitch: (oldLocale: string, newLocale: string) => any;
+          onLanguageSwitched: (oldLocale: string, newLocale: string) => any;
       }
 
       // see options reference: https://github.com/nuxt-community/nuxt-i18n/blob/master/docs/options-reference.md
