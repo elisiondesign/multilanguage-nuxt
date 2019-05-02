@@ -4,15 +4,22 @@ module.exports = {
     browser: true,
     node: true
   },
-  plugins: ['@typescript-eslint'],
   parserOptions: {
-    parser: '@typescript-eslint/parser'
+    parser: 'typescript-eslint-parser'
   },
   extends: [
-    '@nuxtjs'
+    'plugin:vue/recommended',
+  ],
+  // required to lint *.vue files
+  plugins: [
+    'vue',
   ],
   // add your custom rules here
   rules: {
+    'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    'vue/max-attributes-per-line': 'off',
+    'vue/html-self-closing': 0
   },
   globals: {
     'jest/globals': true,
