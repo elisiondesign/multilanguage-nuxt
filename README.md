@@ -302,7 +302,7 @@ export default {
 
 ```
 // nuxt.config.js
-import pages from './pages';
+import pages from './lang/pages';
 
 module.exports = {
 ...

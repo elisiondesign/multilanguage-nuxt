@@ -1,4 +1,5 @@
 const modulePath = require('../../src/module')
+const pages = require('./lang/pages')
 
 export default {
     env: {},
@@ -41,12 +42,7 @@ export default {
                 },
                 fallbackLocale: 'en'
             },
-            pages: {
-                '__nested/customroute/index': {
-                  en: '/:nested/myroute', 
-                  cs: '/:nested/mojecesta' 
-                }
-              }
+            pages
         }]
     ],
     axios: {},
