@@ -28,7 +28,7 @@ exports.DEFAULT_OPTIONS = {
     defaultLocale: null,
     routesNameSeparator: '___',
     defaultLocaleRouteNameSuffix: 'default',
-    strategy: STRATEGIES.PREFIX_EXCEPT_DEFAULT,
+    strategy: STRATEGIES.PREFIX_AND_DEFAULT,
     lazy: false,
     langDir: null,
     rootRedirect: null,

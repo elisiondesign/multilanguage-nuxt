@@ -9,7 +9,7 @@ const { LOCALE_CODE_KEY } = require('./constants')
  */
 const getLocaleCodes = (locales = []) => {
     if (locales.length) {
-    // If first item is a sting, assume locales is a list of codes already
+    // If first item is a string, assume locales is a list of codes already
         if (typeof locales[0] === 'string') {
             return locales
         }
@@ -36,6 +36,7 @@ exports.getPageOptions = (route, pages, locales, pagesDir) => {
         locales: getLocaleCodes(locales),
         paths: {}
     }
+    debugger
     const pattern = new RegExp(`${pagesDir}/`, 'i')
     const chunkName = route.chunkName ? route.chunkName.replace(pattern, '') : route.name
     const pageOptions = pages[chunkName]

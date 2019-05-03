@@ -19,6 +19,7 @@ const { makeRoutes } = require('./helpers/routes')
 
 module.exports = function (moduleOptions) {
     const initialOptions = {
+        // options from nuxt.config.ts
         ...this.options['nuxt-multilanguage'],
         ...moduleOptions
     }
@@ -50,6 +51,7 @@ module.exports = function (moduleOptions) {
             ...options,
             pagesDir
         })
+        debugger
         routes.splice(0, routes.length)
         routes.unshift(...localizedRoutes)
     })
@@ -78,4 +80,4 @@ module.exports = function (moduleOptions) {
     this.options.router.middleware.push('i18n')
 }
 
-// module.exports.meta = require('../package.json')
+module.exports.meta = require('../package.json')

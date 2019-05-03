@@ -19,19 +19,19 @@ export default {
                     name: 'English'
                 },
                 {
-                    code: 'fr',
-                    iso: 'fr-FR',
-                    name: 'Français'
+                    code: 'cs',
+                    iso: 'CS',
+                    name: 'Czech'
                 }
             ],
             defaultLocale: 'en',
             lazy: false,
             vueI18n: {
                 messages: {
-                    fr: {
-                        home: 'Accueil',
-                        about: 'À propos',
-                        posts: 'Articles'
+                    cs: {
+                        home: 'Hlavni',
+                        about: 'O nas',
+                        posts: 'Clanky'
                     },
                     en: {
                         home: 'Homepage',
@@ -40,7 +40,13 @@ export default {
                     }
                 },
                 fallbackLocale: 'en'
-            }
+            },
+            pages: {
+                '__nested/customroute/index': {
+                  en: '/:nested/myroute', 
+                  cs: '/:nested/mojecesta' 
+                }
+              }
         }]
     ],
     axios: {},

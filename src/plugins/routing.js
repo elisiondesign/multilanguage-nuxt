@@ -18,6 +18,8 @@ function localePathFactory (i18nPath, routerPath) {
   const defaultLocaleRouteNameSuffix = '<%= options.defaultLocaleRouteNameSuffix %>'
 
   return function localePath (route, locale) {
+    debugger;
+
     // Abort if no route or no locale
     if (!route) return
     locale = locale || this[i18nPath].locale

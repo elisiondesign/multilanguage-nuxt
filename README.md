@@ -100,7 +100,7 @@ export default ({ app }) => {
 
 ## Hooks :white_check_mark:
 As language switch is effectively just an action of routing to another page, we can utilize __vue-router's__ `beforeEach`
- and `afterEach` hooks. The `multilanguage-nuxt` provides two hooks you can use to perform speciffic tasks
+ and `afterEach` hooks. The `multilanguage-nuxt` provides two hooks you can use to perform specific tasks
  that depend on the app's language.
  
  `beforeLanguageSwitch(oldLocale, newLocale)`
@@ -189,14 +189,14 @@ This would result in the following routes being generate
 ### Strategy
 There are two supported strategies for generating the app's routes:
 
-#### prefifix__except__default
+#### prefix__except__default
 Using this strategy, all of your routes will have a locale prefix added except for the default language.
 
 #### prefix
 With this strategy, all routes will have a locale prefix.
 
 #### prefix__and__default
-This strategy combines both previous strategies behaviours, meaning that you will get URLs with prefixes for every language, but URLs for the default language will also have a non-prefixed version.
+This strategy combines both previous strategies behaviors, meaning that you will get URLs with prefixes for every language, but URLs for the default language will also have a non-prefixed version.
 
 To configure the strategy, use the strategy option. Make sure you have a defaultLocale defined if using prefix__except__default or prefix__and__default strategy.
 
@@ -210,7 +210,7 @@ To configure the strategy, use the strategy option. Make sure you have a default
 ```
 
 ### Custom Paths :black_square_button:
-The above configuration works just fine as long as you neither use dynamic pages and nor need to translate URLs.
+The above configuration works just fine as long as you neither use dynamic pages nor you need to translate URLs.
 However, once you do, the maintenance of the translations as well as of the sitemap module
 becomes burdensome and heavily prone to errors. The `multilanguage-nuxt` does not remove
 the overhead completely, but promotes a single entry solution. Thanks to it, you need only to maintain
@@ -237,7 +237,7 @@ Say you have some nested page like:
 ```
 pages/
 ├── __nested/
-├──── __route/
+├──── customroute/
 ├────── index.vue
 ```
 
@@ -247,10 +247,9 @@ Here's how you would configure this particular page in the configuration:
 // nuxt.config.js
 
 ['multilanguage-nuxt', {
-  parsePages: false,
   pages: {
-    '__nested/__route/index': {
-      en: '/mycustompath/:nested/:route?' // Params need to be put back here as you would with vue-router
+    '__nested/customroute/index': {
+      en: '/:nested/myroute' // Params need to be put back here as you would with vue-router
     }
   }
 }]
@@ -345,7 +344,7 @@ export default async function {
 ```
 
 ## SEO :black_square_button:
-The __multilanguage-nuxt__ module provides several utilities that aim at improving your SEO performace.
+The __multilanguage-nuxt__ module provides several utilities that aim at improving your SEO performance.
 
 - Add a lang attribute containing current locale's ISO code to the <html> tag.
 - Generate <link rel="alternate" hreflang="x"> tags for every language configured in nuxt.config.js. For each language, the ISO code is used as hreflang attribute's value. More on hreflang
@@ -376,7 +375,7 @@ Relatedly, you are required to configure the `iso` code for each of the supporte
 ```
 
 ### Configuration
-The SEO utilites are optional and you can disable some features all of it altogether.
+The SEO utilities are optional and you can disable some features all of it altogether.
 
 To disable all features, set `seo` option to `false`.
 
