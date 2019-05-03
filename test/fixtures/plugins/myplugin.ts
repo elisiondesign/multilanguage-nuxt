@@ -1,10 +1,9 @@
-import {Context} from 'nuxt-types';
-import Vue from 'vue';
+import Vue from 'vue'
+import { Context } from '@@/@types/nuxt-types/index.d'
 
 export default ({ app }: Context) => {
-    Vue.prototype.$myPlugin = () : void => {
-      const localePath = app.localePath('index')
-      console.log('fired from my plugin');
-      console.log(`localePath: ${localePath}`);
-    }
+  Vue.prototype.$myPlugin = () : void => {
+    // eslint-disable-next-line
+    const localePath = app.localePath('index')
   }
+}

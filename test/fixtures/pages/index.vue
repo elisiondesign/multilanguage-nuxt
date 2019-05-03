@@ -24,7 +24,7 @@ import LangSwitcher from '../components/LangSwitcher.vue'
 export default class extends Vue {
   mounted() {
     // Logging test of context plugin
-    (<any>this).$myPlugin();
+    (this as any).$myPlugin()
   }
 }
 </script>

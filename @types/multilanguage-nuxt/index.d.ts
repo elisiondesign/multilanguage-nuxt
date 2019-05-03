@@ -43,7 +43,7 @@ declare namespace NuxtVueI18n {
 
       // special options for a "app.i18n" property: https://goo.gl/UwNfZo
       interface VueI18nInterface {
-          locales: (Locale | LocaleObject )[];
+          locales: (Locale | LocaleObject)[];
           defaultLocale: null | Locale;
           differentDomains: boolean;
           forwardedHost: boolean;
@@ -73,6 +73,13 @@ declare namespace NuxtVueI18n {
           encodePaths: boolean;
       }
   }
+}
+
+export interface MlnVue extends Vue {
+    localePath(route: RawLocation, locale?: string): string;
+    switchLocalePath(locale: string): string;
+    getRouteBaseName(route: RawLocation): string;
+    readonly i18n: VueI18n & IVueI18n
 }
 
 /**
