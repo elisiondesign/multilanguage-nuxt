@@ -1,8 +1,26 @@
 const {
   MODULE_NAME,
-  STRATEGIES } = require('./constants')
+  STRATEGIES
+} = require('./constants')
 const { getPageOptions, getLocaleCodes } = require('./utils')
 
+/**
+ * Extend Nuxt's array of routes with localized urls
+ * For each of the available locale, generate a locale prefixed route
+ * Depending on the strategy configuration, the prefixed route for default language may or may not exist
+ *
+ * @param baseRoutes
+ * @param locales
+ * @param defaultLocale
+ * @param routesNameSeparator
+ * @param defaultLocaleRouteNameSuffix
+ * @param strategy
+ * @param pages
+ * @param encodePaths
+ * @param pagesDir
+ * @param differentDomains
+ * @returns {Array}
+ */
 exports.makeRoutes = (baseRoutes, {
   locales,
   defaultLocale,

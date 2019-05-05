@@ -37,7 +37,7 @@ interface Transition {
   leaveActiveClass?: string
 }
 
-interface ComponentOptions<V extends Vue> {
+interface ComponentOptions<V extends MlnVue> {
   head?: MetaInfo | (() => MetaInfo)
   layout?: string | ((ctx: Context) => string)
   // middleware?: string | string[]

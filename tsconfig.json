@@ -1,13 +1,14 @@
 {
   "compileOnSave": true,
   "compilerOptions": {
-    "experimentalDecorators": true,
+    "target": "esnext",
+    "module": "esnext",
     "lib": [ "es2015", "dom" ],
     "moduleResolution": "node",
-    "noImplicitAny": true,
-    "noImplicitThis": true,
-    "strict": true,
-    "noUnusedLocals": false,
+    "experimentalDecorators": true,
+    "allowJs": true,
+    "sourceMap": true,
+    "strict": false,
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
     "baseUrl": "./",
@@ -21,14 +22,15 @@
       ]
     },
     // "typeRoots": ["./node_modules", "./@types"],
-    // "types": [
-    //   "@nuxt/vue-app",
-    //   "@types/jest",
-    //   "@types/node",
-    //   "@types/webpack-env",
+    "types": [
+      "@nuxt/vue-app",
+      "@types/jest",
+      "@types/node",
+      "@types/webpack-env",
       // "nuxt-types",
       // "vue-types",
       // "multilanguage-nuxt"
+    ],
   },
   "include": [
     "src/**/*.ts",

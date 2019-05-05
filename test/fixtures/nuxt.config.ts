@@ -1,4 +1,5 @@
 const modulePath = require('../../src/module')
+import { Context } from '@@/@types/nuxt-types/index';
 const pages = require('./lang/pages')
 
 export default {
@@ -42,15 +43,22 @@ export default {
         },
         fallbackLocale: 'en'
       },
-      pages
-    }]
+      pages,
+      sitemap: {
+        path: '/sitemap.xml',
+        gzip: true,
+        generate: false,
+        cacheTime: 1000 * 60 * 60 * 24,
+      }
+    },
+  '@nuxtjs/sitemap']
   ],
   axios: {},
   plugins: [
     '~/plugins/i18n-test',
     '~/plugins/myplugin'
   ],
-  extend(config: any, ctx: any) {
+  extend(config: any, ctx: Context) {
     if (ctx.isDev) {
       config.devtool = 'eval-source-map'
     }
