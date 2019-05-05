@@ -34,7 +34,6 @@ exports.getPageOptions = (route, pages, locales, pagesDir) => {
     locales: getLocaleCodes(locales),
     paths: {}
   }
-  debugger
   const pattern = new RegExp(`${pagesDir}/`, 'i')
   const chunkName = route.chunkName ? route.chunkName.replace(pattern, '') : route.name
   const pageOptions = pages[chunkName]

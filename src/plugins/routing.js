@@ -1,4 +1,4 @@
-import './middleware';
+import './templates.middleware';
 import Vue from 'vue'
 
 const routesNameSeparator = '<%= options.routesNameSeparator %>'

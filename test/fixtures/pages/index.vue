@@ -4,6 +4,9 @@
     <div class="cards">
       <nuxt-link :to="localePath('test')">
         test
+      </nuxt-link> <br />
+      <nuxt-link :to="`${localePath('blog-title')}/1`">
+        blog
       </nuxt-link>
     </div>
   </section>
