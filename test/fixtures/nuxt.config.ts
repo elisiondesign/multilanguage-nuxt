@@ -33,12 +33,14 @@ export default {
           cs: {
             home: 'Hlavni',
             about: 'O nas',
-            posts: 'Clanky'
+            posts: 'Clanky',
+            back: 'zpet'
           },
           en: {
             home: 'Homepage',
             about: 'About us',
-            posts: 'Posts'
+            posts: 'Posts',
+            back: 'back'
           }
         },
         fallbackLocale: 'en'
@@ -47,11 +49,10 @@ export default {
       sitemap: {
         path: '/sitemap.xml',
         gzip: true,
-        generate: false,
+        generate: true,
         cacheTime: 1000 * 60 * 60 * 24,
       }
-    },
-  '@nuxtjs/sitemap']
+    }],
   ],
   axios: {},
   plugins: [

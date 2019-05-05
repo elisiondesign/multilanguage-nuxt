@@ -4,6 +4,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@directus/sdk-js": "^5.3.0",
     "@kazupon/vue-i18n-loader": "^0.3.0",
     "@nuxtjs/axios": "^5.3.6",
     "acorn": "^6.1.1",
@@ -22,7 +23,7 @@
     "dev": "nuxt-ts test/fixtures",
     "dev-debug": "node --inspect node_modules/nuxt/bin/nuxt.js test/fixtures",
     "dev-nodemon": "nodemon --inspect node_modules/nuxt-bin/nuxt.js test/fixtures",
-    "build": "nuxt-ts build",
+    "build": "nuxt build test/fixtures",
     "start": "nuxt-ts start",
     "generate": "nuxt-ts generate",
     "lint": "eslint --ext .ts,.js,.vue --fix .",

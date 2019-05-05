@@ -58,7 +58,7 @@ module.exports = function (moduleOptions) {
 
   const pluginsPath = join(__dirname, PLUGINS_DIR)
   const templatesPath = join(__dirname, TEMPLATES_DIR)
-
+  debugger
   // Add plugins
   for (const pluginName of ['main', 'routing']) {
     this.addPlugin({
@@ -72,10 +72,29 @@ module.exports = function (moduleOptions) {
   for (const templatePath of readdirSync(templatesPath)) {
     this.addTemplate({
       src: resolve(templatesPath, templatePath),
-      fileName: join(ROOT_DIR, templatePath),
+      fileName: join(ROOT_DIR, `templates.${templatePath}`),
       options: templatesOptions
     })
   }
+  debugger
+
+  // const sitemapOptions = options.sitemap;
+  this.requireModule(['@nuxtjs/sitemap', { routes: [
+    {
+      url: 'http://test.com/page-1/',
+      links: [
+        { lang: 'en', url: 'http://test.com/page-1/' },
+        { lang: 'ja', url: 'http://test.com/page-1/ja/' }
+      ]
+    },
+    {
+      url: 'http://test.com/page-2/',
+      links: [
+        { lang: 'en', url: 'http://test.com/page-2/' },
+        { lang: 'ja', url: 'http://test.com/page-2/ja/' }
+      ]
+    }
+  ] }])
 
   this.options.router.middleware.push('i18n')
 }
