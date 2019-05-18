@@ -64,7 +64,7 @@ module.exports = function (moduleOptions) {
   const templatesPath = join(__dirname, TEMPLATES_DIR)
 
   // Add plugins
-  for (const pluginName of ['main', 'routing']) {
+  for (const pluginName of ['main', 'routing', 'seo']) {
     this.addPlugin({
       src: resolve(pluginsPath, `${pluginName}.js`),
       fileName: join(ROOT_DIR, `plugin.${pluginName}.js`),
@@ -80,25 +80,6 @@ module.exports = function (moduleOptions) {
       options: templatesOptions
     })
   }
-
-  // const sitemapOptions = options.sitemap;
-
-  // this.requireModule(['@nuxtjs/sitemap', { routes: [
-  //   {
-  //     url: 'http://test.com/page-1/',
-  //     links: [
-  //       { lang: 'en', url: 'http://test.com/page-1/' },
-  //       { lang: 'ja', url: 'http://test.com/page-1/ja/' }
-  //     ]
-  //   },
-  //   {
-  //     url: 'http://test.com/page-2/',
-  //     links: [
-  //       { lang: 'en', url: 'http://test.com/page-2/' },
-  //       { lang: 'ja', url: 'http://test.com/page-2/ja/' }
-  //     ]
-  //   }
-  // ] }])
 
   this.options.router.middleware.push('i18n')
 }

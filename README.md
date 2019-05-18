@@ -393,11 +393,11 @@ Or to disable only some features
 // nuxt.config.js
 
 ['multilanguage-nuxt', {
-  seo: {
-    htmlLang: false,
-    generateAlternate: false,
-    generateOg: false,
-    generateCanoncial: true,
+seo: {
+      htmlLang: false,
+      generateAlternate: true,
+      generateOg: true,
+      generateCanoncial: true,
   }
 }]
 ```

@@ -12,7 +12,12 @@ export default {
   modules: [
     '@nuxtjs/axios',
     [modulePath, {
-      seo: true,
+      seo: {
+        htmlLang: true,
+        generateAlternate: true,
+        generateOg: true,
+        generateCanoncial: true,
+      },
       baseUrl: 'nuxt-app.localhost',
       locales: [
         {

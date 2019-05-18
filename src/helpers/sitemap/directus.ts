@@ -77,7 +77,6 @@ export default class DirectusSitemap {
       links: []
     }
 
-    debugger
     if (nuxtPath.includes(mapping.nuxtPage) && nuxtPath.includes(mapping.dynamicRoute)) {
       
       Object.entries(translation).forEach(entry => {
