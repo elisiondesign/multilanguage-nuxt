@@ -64,5 +64,5 @@ export default async function getAppRoutes() {
     })
   }
 
-  return []
+  return routes
 }
