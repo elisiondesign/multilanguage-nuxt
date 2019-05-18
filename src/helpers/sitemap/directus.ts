@@ -1,73 +1,121 @@
-const DirectusSDK = require('@directus/sdk-js')
+import DirectusSDK from '@directus/sdk-js';
+import Sitemap, {SitemapMapping} from '@@/@types/multilanguage-nuxt/ISitemap';
 
-const api = new DirectusSDK({
-  url: 'https://api.elisiondesign.cz/',
-  project: 'elision'
-})
+export default class DirectusSitemap {
+  api: DirectusSDK
+  appPages: any
+  config: Sitemap
+  locales: Array<string>
 
-export default async function makeDirectusRoutes(appPages) {
-  const routes = await getAppRoutes(appPages)
+  constructor(appPages, locales: Array<string>, config: Sitemap) {
+    this.appPages = appPages;
+    this.config = config;
+    this.locales = locales;
+    this.api = this.configureApi(config.url, config.project)
+  }
 
-  debugger
-  return routes
-}
-
-async function getEntrieforEachLanguage(tableName) {
-  const output = {}
-
-  await api.getItems(tableName, { fields: '*.*' })
-    .then(res => res.data.forEach((entry) => {
-      entry.translations.forEach((language) => {
-        if (output[language.language_code] === undefined) output[language.language_code] = [language.slug]
-        else output[language.language_code].push(language.slug)
-      })
-    }))
-
-  return output
-}
-
-async function getAppRoutes(appPages) {
-  const availableLanguages = await api.getItems('languages').then(res => res.data.map(language => language.id))
-  const members = await api.getItems('team_members').then(res => res.data.map(member => member.short_name))
-  const projects = await api.getItems('projects').then(res => res.data.map(project => project.url))
-  const blogPosts = await getEntrieforEachLanguage('blog')
-  const services = await getEntrieforEachLanguage('services')
-
-  const routes = []
-
-  for (let i = 0; i < availableLanguages.length; i += 1) {
-    const language = availableLanguages[i]
-
-    Object.entries(appPages).forEach((pageEntry) => {
-      const nuxtPath = pageEntry[0]
-      const pathTranslations = pageEntry[1]
-
-      const routePath = language + pathTranslations[language]
-
-      // Add only language (without '/' at the end) for index page
-      if (nuxtPath === 'index') {
-        routes.push(language)
-      } else if (nuxtPath.includes('team/_')) {
-        for (let index = 0; index < members.length; index += 1) {
-          routes.push(routePath.replace(/:name\?/, members[index]))
-        }
-      } else if (nuxtPath.includes('blog/_')) {
-        for (let postIndex = 0; postIndex < blogPosts[language].length; postIndex += 1) {
-          routes.push(routePath.replace(/:title\?/, blogPosts[language][postIndex]))
-        }
-      } else if (nuxtPath.includes('services/_')) {
-        for (let serviceIndex = 0; serviceIndex < services[language].length; serviceIndex += 1) {
-          routes.push(routePath.replace(/:name\?/, services[language][serviceIndex]))
-        }
-      } else if (nuxtPath.includes('projects/_')) {
-        for (let projectIndex = 0; projectIndex < projects.length; projectIndex += 1) {
-          routes.push(routePath.replace(/:name\?/, projects[projectIndex]))
-        }
-      } else {
-        routes.push(routePath)
-      }
+  private configureApi(url: string, project: string) {
+    return new DirectusSDK({
+      url,
+      project
     })
   }
 
-  return routes
+  private async getApiTranslationsAsync(tableName: string, field: string, outer: boolean) {
+    const output = {}
+
+    await this.api.getItems(tableName, { fields: '*.*' })
+      .then(res => res.data.forEach((entry) => {
+        entry.translations.forEach((language) => {
+          const value = outer ? entry[field] : language[field]
+          if (output[language.language_code] === undefined) {
+            output[language.language_code] = [value]
+          } else {
+           output[language.language_code].push(value)
+          }
+        })
+      }))
+  
+    return output
+  }
+
+  private prepareTranslationsAsync() {
+    const mappings = this.config.mappings
+    return mappings.map(async (mapping) => {
+      const response = await this.getApiTranslationsAsync(
+          mapping.table,
+          mapping.field,
+          mapping.outer
+        )
+        return response
+    })
+  }
+
+  private filterAllowedTranslations(translations) {
+    return translations.map(translation => {
+      const obj = {};
+      Object.entries(translation).forEach(entry => {
+        const localeAllowed = this.locales.includes(entry[0])
+        if(localeAllowed) {
+          obj[entry[0]] = entry[1];
+        }
+      })
+
+      return obj;
+    })
+  }
+
+  private localizeRoute(
+    pageEntry: [string, {}], 
+    locale: string,
+    mapping: SitemapMapping,
+    translation: Array<any>
+    ): Array<string>{
+    const nuxtPath: string = pageEntry[0]
+    const pathTranslations: Object = pageEntry[1]
+
+    const routePath = locale + pathTranslations[locale]
+    const routes = []
+
+    if (nuxtPath.includes(mapping.nuxtPage) && nuxtPath.includes(mapping.dynamicRoute)) {
+      translation[locale].forEach(value => {
+        const standardizedRoute = mapping.dynamicRoute.replace("_", "")
+        const localizedEntry = routePath.replace(`:${standardizedRoute}\?`, value)
+        routes.push(localizedEntry)
+      });
+    }
+    return routes;
+  }
+
+  private prepareLocalizedRoutes(translations) {
+    const mappings = this.config.mappings
+    let routes = []
+
+    // each entry in module's 'sitemap' option
+    for (let i = 0; i < mappings.length; i++) {
+      // For each locale defined in options
+      for (let j = 0; j < this.locales.length; j++) {
+        const mapping = mappings[i];
+        const translation = translations[i];
+        const locale = this.locales[j]
+        Object.entries(this.appPages).forEach((pageEntry) => {
+          const localizedRoutes = this.localizeRoute(pageEntry, locale, mapping, translation)
+          routes = routes.concat(localizedRoutes)
+        })
+      }
+    }
+
+    return routes
+  }
+
+  async getAppRoutes() {
+    
+    const apiPool = this.prepareTranslationsAsync();
+    let translations = await Promise.all(apiPool); // Promise here returns a single item array
+    translations = this.filterAllowedTranslations(translations)
+    const localizedRoutes = this.prepareLocalizedRoutes(translations)
+
+    debugger
+    return localizedRoutes
+  }
 }

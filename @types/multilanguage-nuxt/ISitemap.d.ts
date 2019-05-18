@@ -6,8 +6,9 @@ export default interface Sitemap {
 }
 
 export interface SitemapMapping {
-        nuxtPage: string, // app page, relates to first level nuxt page
-        dynamicRoute: string, // the dynamic part (as defined in pages.js
-        table: string, // table name in directus
-        field: string // Translated field to be included in the sitemap
+    nuxtPage: string, // app page, relates to first level nuxt page
+    dynamicRoute: string, // the dynamic part (as defined in pages.js
+    table: string, // table name in directus
+    field: string // Translated field to be included in the sitemap
+    outer: boolean | undefined
 }

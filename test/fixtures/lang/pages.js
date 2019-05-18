@@ -6,5 +6,13 @@ module.exports = {
   'blog/_title/index': {
     en: '/blog/:title?',
     cs: '/clanky/:title?'
+  },
+  'projects/index': {
+    en: '/projects',
+    cs: '/projekty'
+  },
+  'projects/_name/index': {
+    en: '/projects/:name?',
+    cs: '/projekty/:name?'
   }
 }

@@ -18,7 +18,7 @@ const {
 const { makeRoutes } = require('./helpers/routes')
 const { makeSitemapRoutes } = require('./helpers/sitemap')
 
-module.exports = function (moduleOptions) {
+module.exports = async function (moduleOptions) {
   const initialOptions = {
     // options from nuxt.config.ts
     ...this.options['nuxt-multilanguage'],
@@ -57,8 +57,9 @@ module.exports = function (moduleOptions) {
     routes.unshift(...localizedRoutes)
   })
 
-  const sitemap = makeSitemapRoutes(moduleOptions.pages, moduleOptions.sitemap)
+  const sitemap = await makeSitemapRoutes(options)
 
+  debugger
   const pluginsPath = join(__dirname, PLUGINS_DIR)
   const templatesPath = join(__dirname, TEMPLATES_DIR)
 

@@ -47,10 +47,24 @@ export default {
       },
       pages,
       sitemap: {
-        path: '/sitemap.xml',
-        gzip: true,
-        generate: true,
-        cacheTime: 1000 * 60 * 60 * 24,
+        source: 'directus-7',
+        url: 'https://api.elisiondesign.cz/', // <-- is public and read-only, no bearer token required
+        project: 'elision',
+        mappings: [
+          {
+            nuxtPage: 'blog', // app page, relates to first level nuxt page
+            dynamicRoute: '_title', // the dynamic part (as defined in pages.js
+            table: 'blog', // table name in directus
+            field: 'slug' // Translated field to be included in the sitemap
+          },
+          {
+            nuxtPage: 'projects', // app page, relates to first level nuxt page
+            dynamicRoute: '_name', // the dynamic part (as defined in pages.js
+            table: 'projects', // table name in directus
+            field: 'url', // Translated field to be included in the sitemap
+            outer: true
+          }
+        ]
       }
     }],
   ],
