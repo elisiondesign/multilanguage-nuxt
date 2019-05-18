@@ -5,12 +5,14 @@ export default class DirectusSitemap {
   api: DirectusSDK
   appPages: any
   config: Sitemap
+  defaultLocale: string
   locales: Array<string>
 
-  constructor(appPages, locales: Array<string>, config: Sitemap) {
+  constructor(appPages, locales: Array<string>, defaultLocale: string, config: Sitemap) {
     this.appPages = appPages;
     this.config = config;
     this.locales = locales;
+    this.defaultLocale = defaultLocale;
     this.api = this.configureApi(config.url, config.project)
   }
 
@@ -66,31 +68,39 @@ export default class DirectusSitemap {
   }
 
   private localizeRoute(
-    pageEntry: [string, {}], 
+    nuxtPath: string,
     locale: string,
     mapping: SitemapMapping,
-    translation: Array<any>
-    ): Array<string>{
-    const nuxtPath: string = pageEntry[0]
-    const pathTranslations: Object = pageEntry[1]
-
-    const routePath = locale + pathTranslations[locale]
-    const routes = []
-
-    if (nuxtPath.includes(mapping.nuxtPage) && nuxtPath.includes(mapping.dynamicRoute)) {
-      translation[locale].forEach(value => {
-        const standardizedRoute = mapping.dynamicRoute.replace("_", "")
-        const localizedEntry = routePath.replace(`:${standardizedRoute}\?`, value)
-        routes.push(localizedEntry)
-      });
+    translation: Array<any>) {
+    const route = {
+      url: '',
+      links: []
     }
-    return routes;
+
+    debugger
+    if (nuxtPath.includes(mapping.nuxtPage) && nuxtPath.includes(mapping.dynamicRoute)) {
+      
+      Object.entries(translation).forEach(entry => {
+        const code = entry[0];
+        const content = entry[1];
+
+        content.forEach(path => {
+          if (code === this.defaultLocale) {
+            route.url = code;
+          }
+          route.links.push({lang: code, url: `${locale}/${path}`})
+        });
+      })
+
+    }
+
+    return route;
   }
 
   private prepareLocalizedRoutes(translations) {
     const mappings = this.config.mappings
     let routes = []
-
+    Object.keys(this.appPages).forEach(nuxtPath => {
     // each entry in module's 'sitemap' option
     for (let i = 0; i < mappings.length; i++) {
       // For each locale defined in options
@@ -98,24 +108,21 @@ export default class DirectusSitemap {
         const mapping = mappings[i];
         const translation = translations[i];
         const locale = this.locales[j]
-        Object.entries(this.appPages).forEach((pageEntry) => {
-          const localizedRoutes = this.localizeRoute(pageEntry, locale, mapping, translation)
-          routes = routes.concat(localizedRoutes)
-        })
+        const localizedRoutes = this.localizeRoute(nuxtPath, locale, mapping, translation)
+        routes = routes.concat(localizedRoutes)
       }
     }
+  })
 
     return routes
   }
 
   async getAppRoutes() {
-    
     const apiPool = this.prepareTranslationsAsync();
     let translations = await Promise.all(apiPool); // Promise here returns a single item array
     translations = this.filterAllowedTranslations(translations)
     const localizedRoutes = this.prepareLocalizedRoutes(translations)
 
-    debugger
     return localizedRoutes
   }
 }

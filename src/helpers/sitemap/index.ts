@@ -4,16 +4,17 @@ import { SITEMAP_SOURCES } from './../../constants/ecma6';
 
 const { getLocaleCodes } = require('../utils')
 
-exports.makeSitemapRoutes = async (options) => {
+exports.makeSitemapRoutesAsync = async (options) => {
   const appPages = options.pages;
   const config = options.sitemap;
+  const defaultLocale = options.defaultLocale;
   const locales = getLocaleCodes(options.locales);
 
-  let routes = [];
+  let sitemapRoutes = [];
 
   if (config.source === SITEMAP_SOURCES.DIRECTUS_7) {
-    routes = await new DirectusSitemap(appPages, locales, config).getAppRoutes();
+    sitemapRoutes = await new DirectusSitemap(appPages, locales, defaultLocale, config).getAppRoutes();
   }
 
-  return routes
+  return sitemapRoutes
 }

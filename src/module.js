@@ -16,9 +16,9 @@ const {
 } = require('./helpers/constants')
 
 const { makeRoutes } = require('./helpers/routes')
-const { makeSitemapRoutes } = require('./helpers/sitemap')
+const { makeSitemapRoutesAsync } = require('./helpers/sitemap')
 
-module.exports = async function (moduleOptions) {
+module.exports = function (moduleOptions) {
   const initialOptions = {
     // options from nuxt.config.ts
     ...this.options['nuxt-multilanguage'],
@@ -57,9 +57,9 @@ module.exports = async function (moduleOptions) {
     routes.unshift(...localizedRoutes)
   })
 
-  const sitemap = await makeSitemapRoutes(options)
+  const sitemapRoutes = makeSitemapRoutesAsync(options)
+  this.requireModule(['@nuxtjs/sitemap', { routes() { return sitemapRoutes } }])
 
-  debugger
   const pluginsPath = join(__dirname, PLUGINS_DIR)
   const templatesPath = join(__dirname, TEMPLATES_DIR)
 
@@ -82,22 +82,23 @@ module.exports = async function (moduleOptions) {
   }
 
   // const sitemapOptions = options.sitemap;
-  this.requireModule(['@nuxtjs/sitemap', { routes: [
-    {
-      url: 'http://test.com/page-1/',
-      links: [
-        { lang: 'en', url: 'http://test.com/page-1/' },
-        { lang: 'ja', url: 'http://test.com/page-1/ja/' }
-      ]
-    },
-    {
-      url: 'http://test.com/page-2/',
-      links: [
-        { lang: 'en', url: 'http://test.com/page-2/' },
-        { lang: 'ja', url: 'http://test.com/page-2/ja/' }
-      ]
-    }
-  ] }])
+
+  // this.requireModule(['@nuxtjs/sitemap', { routes: [
+  //   {
+  //     url: 'http://test.com/page-1/',
+  //     links: [
+  //       { lang: 'en', url: 'http://test.com/page-1/' },
+  //       { lang: 'ja', url: 'http://test.com/page-1/ja/' }
+  //     ]
+  //   },
+  //   {
+  //     url: 'http://test.com/page-2/',
+  //     links: [
+  //       { lang: 'en', url: 'http://test.com/page-2/' },
+  //       { lang: 'ja', url: 'http://test.com/page-2/ja/' }
+  //     ]
+  //   }
+  // ] }])
 
   this.options.router.middleware.push('i18n')
 }

@@ -16,7 +16,6 @@ const { getPageOptions, getLocaleCodes } = require('./utils')
  * @param defaultLocaleRouteNameSuffix
  * @param strategy
  * @param pages
- * @param encodePaths
  * @param pagesDir
  * @param differentDomains
  * @returns {Array}
@@ -28,7 +27,6 @@ exports.makeRoutes = (baseRoutes, {
   defaultLocaleRouteNameSuffix,
   strategy,
   pages,
-  encodePaths,
   pagesDir,
   differentDomains
 }) => {
@@ -57,7 +55,8 @@ exports.makeRoutes = (baseRoutes, {
     }
 
     // Generate routes for component's supported locales
-    for (let i = 0, length1 = componentOptions.locales.length; i < length1; i++) {
+    const localesLength = componentOptions.locales.length
+    for (let i = 0; i < localesLength; i++) {
       const locale = componentOptions.locales[i]
       let { path } = route
       const { name } = route
@@ -84,7 +83,7 @@ exports.makeRoutes = (baseRoutes, {
 
       // Get custom path if any
       if (componentOptions.paths && componentOptions.paths[locale]) {
-        path = encodePaths ? encodeURI(componentOptions.paths[locale]) : componentOptions.paths[locale]
+        path = componentOptions.paths[locale]
       }
 
       // Add route prefix if needed
