@@ -20,7 +20,7 @@
     "vuex-class": "0.3.2"
   },
   "scripts": {
-    "dev": "nuxt-ts test/fixtures",
+    "dev": "nuxt test/fixtures",
     "dev-debug": "node --inspect node_modules/nuxt/bin/nuxt.js test/fixtures",
     "dev-nodemon": "nodemon --inspect node_modules/nuxt-bin/nuxt.js test/fixtures",
     "build": "nuxt build test/fixtures",

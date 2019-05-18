@@ -16,6 +16,7 @@ const {
 } = require('./helpers/constants')
 
 const { makeRoutes } = require('./helpers/routes')
+const { makeSitemapRoutes } = require('./helpers/sitemap')
 
 module.exports = function (moduleOptions) {
   const initialOptions = {
@@ -44,21 +45,23 @@ module.exports = function (moduleOptions) {
     isSpa: this.options.mode === 'spa'
   }
 
-  // Generate localized routes
   const pagesDir = this.options.dir && this.options.dir.pages ? this.options.dir.pages : 'pages'
+
+  // Generate localized routes
   this.extendRoutes((routes) => {
     const localizedRoutes = makeRoutes(routes, {
       ...options,
       pagesDir
     })
-    debugger
     routes.splice(0, routes.length)
     routes.unshift(...localizedRoutes)
   })
 
+  const sitemap = makeSitemapRoutes(moduleOptions.pages, moduleOptions.sitemap)
+
   const pluginsPath = join(__dirname, PLUGINS_DIR)
   const templatesPath = join(__dirname, TEMPLATES_DIR)
-  debugger
+
   // Add plugins
   for (const pluginName of ['main', 'routing']) {
     this.addPlugin({
@@ -76,7 +79,6 @@ module.exports = function (moduleOptions) {
       options: templatesOptions
     })
   }
-  debugger
 
   // const sitemapOptions = options.sitemap;
   this.requireModule(['@nuxtjs/sitemap', { routes: [
