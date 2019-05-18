@@ -1,5 +1,4 @@
 import DirectusSitemap from './directus'
-import Sitemap from '@@/@types/multilanguage-nuxt/ISitemap';
 import { SITEMAP_SOURCES } from './../../constants/ecma6';
 
 const { getLocaleCodes } = require('../utils')
@@ -16,5 +15,13 @@ exports.makeSitemapRoutesAsync = async (options) => {
     sitemapRoutes = await new DirectusSitemap(appPages, locales, defaultLocale, config).getAppRoutes();
   }
 
+  if (typeof(config.source) === 'function') {
+    sitemapRoutes = await config.source()
+  }
+
+  if (sitemapRoutes.length === 0) {
+    console.warn('Could not generate any routes for sitemap. Please consult your configuration with the documentation');
+  }
+  
   return sitemapRoutes
 }
