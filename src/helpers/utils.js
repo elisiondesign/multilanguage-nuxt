@@ -29,31 +29,9 @@ exports.getLocaleCodes = getLocaleCodes
  * @param  {String} pagesDir Pages dir from Nuxt's configuration
  * @return {Object}          Page options
  */
-exports.getPageOptions = (route, pages, locales, pagesDir) => {
+exports.getPageOptions = (locales) => {
   const options = {
-    locales: getLocaleCodes(locales),
-    paths: {}
+    locales: getLocaleCodes(locales)
   }
-  const pattern = new RegExp(`${pagesDir}/`, 'i')
-  const chunkName = route.chunkName ? route.chunkName.replace(pattern, '') : route.name
-  const pageOptions = pages[chunkName]
-  // Routing disabled
-  if (pageOptions === false) {
-    return false
-  }
-  // Skip if no page options defined
-  if (!pageOptions) {
-    return options
-  }
-  // Construct options object
-  Object.keys(pageOptions).forEach((locale) => {
-    // Remove disabled locales from page options
-    if (pageOptions[locale] === false) {
-      options.locales = options.locales.filter(l => l !== locale)
-    } else if (typeof pageOptions[locale] === 'string') {
-      // Set custom path if any
-      options.paths[locale] = pageOptions[locale]
-    }
-  })
   return options
 }
