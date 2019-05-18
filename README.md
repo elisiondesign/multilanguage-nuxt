@@ -58,7 +58,7 @@ The minimal configuration requires you to provide some translations and define s
 }
 ```
 
-### Linking with nuxt-link
+### Linking with nuxt-link :white_check_mark:
 When creating a link, it is necessary to build the proper URL prefixed with current locale.
 For convenience, the module registers several global mixins that makes this a breeze:
 
@@ -86,7 +86,7 @@ You may suppress this effect by passing __false__ as the second argument.
 <nuxt-link :to="changeLanguage('cs', false)">Čeština</nuxt-link>
 ```
 
-For convenience, these methods are also available in the app's context: :white_check_mark:
+For convenience, these methods are also available in the app's context: 
 ```
 // ~/plugins/myplugin.js
 
@@ -148,7 +148,7 @@ module.exports = {
 ```
 
 
-## Routing :black_square_button:
+## Routing :white_check_mark:
 __multilanguage-nuxt__ overrides Nuxt default routes to add locale prefixes to every URL.
 Say your app supports two languages: French and English as the default language, and you have the following pages in your project:
 
@@ -209,7 +209,7 @@ To configure the strategy, use the strategy option. Make sure you have a default
 }]
 ```
 
-### Custom Paths :black_square_button:
+### Custom Paths :white_check_mark:
 The above configuration works just fine as long as you neither use dynamic pages nor you need to translate URLs.
 However, once you do, the maintenance of the translations as well as of the sitemap module
 becomes burdensome and heavily prone to errors. The `multilanguage-nuxt` does not remove
