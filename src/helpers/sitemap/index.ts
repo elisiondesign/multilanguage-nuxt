@@ -1,5 +1,5 @@
 import DirectusSitemap from './directus'
-import { SITEMAP_SOURCES } from './../../constants/ecma6';
+import { SITEMAP_SOURCES } from '../../constants';
 
 const { getLocaleCodes } = require('../utils')
 

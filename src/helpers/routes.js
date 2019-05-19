@@ -1,7 +1,7 @@
-const {
+import {
   MODULE_NAME,
   STRATEGIES
-} = require('./constants')
+} from './constants'
 const { getPageOptions, getLocaleCodes } = require('./utils')
 
 /**

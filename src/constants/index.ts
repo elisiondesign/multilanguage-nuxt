@@ -1,25 +1,28 @@
-const packageJson = require('../../package.json')
+export const SITEMAP_SOURCES = {
+  DIRECTUS_7: 'directus-7'
+}
+
+import packageJson from '../../package.json';
 
 // Internals
-exports.MODULE_NAME = packageJson.name
-exports.ROOT_DIR = 'multilanguage-nuxt'
-exports.HELPERS_PATH = 'helpers/'
-exports.PLUGINS_DIR = 'plugins/'
-exports.TEMPLATES_DIR = 'templates/'
-exports.LOCALE_CODE_KEY = 'code'
-exports.LOCALE_ISO_KEY = 'iso'
+export const MODULE_NAME = packageJson.name
+export const ROOT_DIR = 'multilanguage-nuxt'
+export const HELPERS_PATH = 'helpers/'
+export const PLUGINS_DIR = 'plugins/'
+export const TEMPLATES_DIR = 'templates/'
+export const LOCALE_CODE_KEY = 'code'
+export const LOCALE_ISO_KEY = 'iso'
 
 // Options
-const STRATEGIES = {
+export const STRATEGIES = {
   PREFIX: 'prefix',
   PREFIX_EXCEPT_DEFAULT: 'prefix_except_default',
   PREFIX_AND_DEFAULT: 'prefix_and_default'
 }
 
-exports.STRATEGIES = STRATEGIES
 
-exports.COMPONENT_OPTIONS_KEY = 'nuxtI18n'
-exports.DEFAULT_OPTIONS = {
+export const COMPONENT_OPTIONS_KEY = 'nuxtI18n'
+export const DEFAULT_OPTIONS = {
   vueI18n: {},
   locales: [],
   defaultLocale: null,
@@ -47,4 +50,4 @@ exports.DEFAULT_OPTIONS = {
   beforeLanguageSwitch: () => null,
   onLanguageSwitched: () => null
 }
-exports.NESTED_OPTIONS = ['detectBrowserLanguage', 'vuex']
+export const NESTED_OPTIONS = ['detectBrowserLanguage', 'vuex']

@@ -1,7 +1,4 @@
-const { resolve, join } = require('path')
-const { readdirSync } = require('fs')
-
-const {
+import {
   DEFAULT_OPTIONS,
   ROOT_DIR,
   TEMPLATES_DIR,
@@ -13,7 +10,10 @@ const {
   LOCALE_DOMAIN_KEY,
   LOCALE_FILE_KEY,
   STRATEGIES
-} = require('./helpers/constants')
+} from './helpers/constants'
+
+const { resolve, join } = require('path')
+const { readdirSync } = require('fs')
 
 const { makeRoutes } = require('./helpers/routes')
 const { makeSitemapRoutesAsync } = require('./helpers/sitemap')

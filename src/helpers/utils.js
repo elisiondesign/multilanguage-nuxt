@@ -1,4 +1,4 @@
-const { LOCALE_CODE_KEY } = require('./constants')
+import { LOCALE_CODE_KEY } from './constants'
 
 /**
  * Get an array of locale codes from a list of locales
