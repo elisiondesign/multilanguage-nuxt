@@ -53,8 +53,10 @@ module.exports = function (moduleOptions) {
   })
 
   // Prepare routes for sitemap module and pass it the resolution promise-based function
-  const sitemapRoutes = makeSitemapRoutesAsync(options)
-  this.requireModule(['@nuxtjs/sitemap', { routes() { return sitemapRoutes } }])
+  if (options.sitemap) {
+    const sitemapRoutes = makeSitemapRoutesAsync(options)
+    this.requireModule(['@nuxtjs/sitemap', { routes() { return sitemapRoutes } }])
+  }
 
   const pluginsPath = join(__dirname, PLUGINS_DIR)
   const templatesPath = join(__dirname, TEMPLATES_DIR)
@@ -78,12 +80,14 @@ module.exports = function (moduleOptions) {
   }
 
   // Add post-template plugins
-  for (const pluginName of ['seo']) {
-    this.addPlugin({
-      src: resolve(pluginsPath, `${pluginName}.js`),
-      fileName: join(ROOT_DIR, `plugin.${pluginName}.js`),
-      options: templatesOptions
-    })
+  if (options.seo !== false) {
+    for (const pluginName of ['seo']) {
+      this.addPlugin({
+        src: resolve(pluginsPath, `${pluginName}.js`),
+        fileName: join(ROOT_DIR, `plugin.${pluginName}.js`),
+        options: templatesOptions
+      })
+    }
   }
 
   // Register i18n middleware, defined in middleware template

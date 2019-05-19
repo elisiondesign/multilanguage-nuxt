@@ -10,8 +10,8 @@ multilanguage-nuxt takes care of internalization of your page (by integrating vu
   * sitemap link generation with regards to mutlilanguage content
 
 
-This module is heavily inspired by the [nuxt-i18n](https://github.com/nuxt-community/nuxt-i18n) module for internalization, but several additional options that are mainly
-aimed at maximizing the SEO and page rank score. While some functions are the same or similar, there are many that are not present in this module (and vice versa).
+This module is heavily inspired by the [nuxt-i18n](https://github.com/nuxt-community/nuxt-i18n) module for internalization, but provides several additional options that are mainly
+aimed at maximizing SEO and the page rank score. While some features are the same or similar, there are many that are not present in this module (and vice versa).
 As a rule of thumb, if you need more options, support of multiple domains, lazyloading or overriding options from inside the components, you should opt for the nuxt-i18n module.
 However, if your main focus is the SEO, this module is likely the choice.
 
@@ -106,16 +106,16 @@ As language switch is effectively just an action of routing to another page, we 
  `beforeLanguageSwitch(oldLocale, newLocale)`
  Called right before setting the app's new locale.
  
- Parameters:
- - oldLocale: the app's locale before the switch
- - newLocale: the app's locale after the switch
+ __Parameters:__
+ - `oldLocale`: the app's locale before the switch
+ - `newLocale`: the app's locale after the switch
 
 `onLanguageSwitched(oldLocale, newLocale)`
 Called right after the app's locale has been switched.
 
-Parameters:
-- oldLocale: the app's locale before the switch
-- newLocale: the app's locale after the switch
+__Parameters:__
+- `oldLocale`: the app's locale before the switch
+- `newLocale`: the app's locale after the switch
 
 ### Usage
 You may use these hooks anytime you have access to the app's [context](https://nuxtjs.org/api/context/).
@@ -198,7 +198,7 @@ With this strategy, all routes will have a locale prefix.
 #### prefix__and__default
 This strategy combines both previous strategies behaviors, meaning that you will get URLs with prefixes for every language, but URLs for the default language will also have a non-prefixed version.
 
-To configure the strategy, use the strategy option. Make sure you have a defaultLocale defined if using prefix__except__default or prefix__and__default strategy.
+To configure the strategy, use the strategy option. Make sure you have a defaultLocale defined if opting for either _prefix__except__default_ or _prefix__and__default strategy_.
 
 ```
 // nuxt.config.js
@@ -216,7 +216,7 @@ becomes burdensome and heavily prone to errors. The `multilanguage-nuxt` does no
 the overhead completely, but promotes a single entry solution. Thanks to it, you need only to maintain
 single file/function in order to keep your multilingual site up-to-date.
 
-The easiest way to define custom URL's is to configure __pages__ attribute in nuxt config file.
+The easiest way to define custom URL's is to configure __pages__ attribute in the nuxt config file.
 
 ```
 // nuxt.config.js
@@ -343,13 +343,13 @@ export default async function {
 };
 ```
 
-## SEO :black_square_button:
+## SEO :white_check_mark:
 The __multilanguage-nuxt__ module provides several utilities that aim at improving your SEO performance.
 
-- Add a lang attribute containing current locale's ISO code to the <html> tag.
+- Add a __lang attribute__ containing current locale's ISO code to the <html> tag.
 - Generate <link rel="alternate" hreflang="x"> tags for every language configured in nuxt.config.js. For each language, the ISO code is used as hreflang attribute's value. More on hreflang
-- Generate og:locale and og:locale:alternate meta tags as defined in the Open Graph protocol
-- When using prefix__and__default strategy, generate rel="canonical" link on the default language routes containing the prefix to avoid duplicate indexation. More on canonical
+- Generate __og:locale__ and og:locale:alternate meta tags as defined in the Open Graph protocol
+- When using _prefix__and__default_ strategy, generate __rel="canonical"__ link on the default language routes containing the prefix to avoid duplicate indexation. More on canonical
 
 Relatedly, you are required to configure the `iso` code for each of the supported language by your app.
 
@@ -411,12 +411,12 @@ the entries of every language/locale variant provided. However, by default this 
 In order to turn on the generation of the dynamic pages, you need to tell the module about all the pages and their translations.
 
 This is no generic task and the implementation will differ from source to source. The `multilanguage-nuxt` module supports
-integration with Directus 7 out of the box only so far.
+integration with __Directus 7__ out of the box only so far.
 
-The setup requires you to set `url`, target `project` and `bearer token` and if applicable.
+The setup requires you to set `url` and target `project`.
 Furthermore, the `pages` attribute must be present in the configuration.
 Note that the `translations` in the Directus instance must be configured in accordance with the official manual.
-That is, it must contain following fields: id, language_code
+That is, it must contain following fields: `id`, `language_code`
 Additionally, the `language` table must be present.
 
 The `mappings` attribute uses the `pages` attribute to generate array of translated routes.
@@ -434,11 +434,11 @@ import pages from './lang/pages/;
     project: 'elision',
     mappings: [
       {
-        page: blog, // app page, relates to first level nuxt page
-        table: blog, // table name in directus
-        dynamicFile: _title // the dynamic part (as defined in pages.js
-        sitemapEntry: slug // Translated field to be included in the sitemap
-      }
+        nuxtPage: 'blog', // app page, relates to first level nuxt page
+        dynamicRoute: '_title', // the dynamic part (as defined in pages.js
+        table: 'blog', // table name in directus
+        field: 'slug' // Translated field to be included in the sitemap
+      },
     ]
   }
 }]
@@ -489,7 +489,7 @@ the final array of routes will be merged with the routes generated by the `multi
 just set `sitemap` option to `false`.
 
 
-## Recipes :black_square_button:
+## Recipes :white_check_mark:
 ### Custom sitemap function
 ```
 import appPages from '../lang/pages';
