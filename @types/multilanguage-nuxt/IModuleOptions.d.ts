@@ -11,6 +11,7 @@ export default interface ModuleOptions {
     strategy: string,
     vueI18n: I18nOptions
     pages: any,
+    pagesDir: 'string',
     sitemap: {
       source: 'directus-7',
       url: 'https://api.elisiondesign.cz/', // <-- is public and read-only, no bearer token required

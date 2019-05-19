@@ -2,9 +2,10 @@ import {
   MODULE_NAME,
   STRATEGIES
 } from '../constants'
-import getLocaleCodes from './utils'
+import getLocaleCodes, {getPageOptions} from './utils'
 import NuxtRoute from '@@/@types/nuxt-types/IRoutes'
 import ModuleOptions from '@@/@types/multilanguage-nuxt/IModuleOptions.d';
+import { ComponentOptions } from '@@/@types/nuxt-types';
 
 /**
  * Extend Nuxt's array of routes with localized urls
@@ -16,18 +17,22 @@ export const makeRoutes = (baseRoutes: Array<NuxtRoute>, {
   defaultLocale,
   routesNameSeparator,
   defaultLocaleRouteNameSuffix,
+  pages,
+  pagesDir,
   strategy,
 }: ModuleOptions) => {
-  debugger
   const localeCodes = getLocaleCodes(locales)
-  let localizedRoutes = []
+  let localizedRoutes: Array<NuxtRoute> = []
 
-  const buildLocalizedRoutes = (route, routeOptions: any = {}, isChild: boolean = false) => {
-    const routes = []
+  const buildLocalizedRoutes = (route: NuxtRoute, routeOptions: any = {}, isChild: boolean = false) => {
+    const routes: Array<NuxtRoute> = []
+    const pageOptions = getPageOptions(route, pages, locales, pagesDir)
 
+    debugger
     // Component's specific options
     const componentOptions: any = {
       locales: localeCodes,
+      ...pageOptions,
       ...routeOptions
     }
 
@@ -60,6 +65,7 @@ export const makeRoutes = (baseRoutes: Array<NuxtRoute>, {
 
       // Get custom path if any
       if (componentOptions.paths && componentOptions.paths[locale]) {
+        debugger
         path = componentOptions.paths[locale]
       }
 

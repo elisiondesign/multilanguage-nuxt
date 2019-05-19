@@ -19,3 +19,40 @@ export default function getLocaleCodes (locales: Array<Locale> | Array<string> =
   }
   return []
 }
+
+/**
+ * Retrieve page's options from the module's configuration for a given route
+ * @param  {Object} route    Route
+ * @param  {Object} pages    Pages options from module's configuration
+ * @param  {Array} locales   Locale from module's configuration
+ * @param  {String} pagesDir Pages dir from Nuxt's configuration
+ * @return {Object}          Page options
+ */
+export function getPageOptions (route, pages, locales, pagesDir) {
+  const options = {
+    locales: getLocaleCodes(locales),
+    paths: {}
+  }
+  const pattern = new RegExp(`${pagesDir}/`, 'i')
+  const chunkName = route.chunkName ? route.chunkName.replace(pattern, '') : route.name
+  const pageOptions = pages[chunkName]
+  // Routing disabled
+  if (pageOptions === false) {
+    return false
+  }
+  // Skip if no page options defined
+  if (!pageOptions) {
+    return options
+  }
+  // Construct options object
+  Object.keys(pageOptions).forEach((locale) => {
+    // Remove disabled locales from page options
+    if (pageOptions[locale] === false) {
+      options.locales = options.locales.filter(l => l !== locale)
+    } else if (typeof pageOptions[locale] === 'string') {
+      // Set custom path if any
+      options.paths[locale] = pageOptions[locale]
+    }
+  })
+  return options
+}
