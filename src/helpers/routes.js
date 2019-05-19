@@ -1,24 +1,13 @@
 import {
   MODULE_NAME,
   STRATEGIES
-} from './constants'
-const { getPageOptions, getLocaleCodes } = require('./utils')
+} from '../constants'
+const { getLocaleCodes } = require('./utils')
 
 /**
  * Extend Nuxt's array of routes with localized urls
  * For each of the available locale, generate a locale prefixed route
  * Depending on the strategy configuration, the prefixed route for default language may or may not exist
- *
- * @param baseRoutes
- * @param locales
- * @param defaultLocale
- * @param routesNameSeparator
- * @param defaultLocaleRouteNameSuffix
- * @param strategy
- * @param pages
- * @param pagesDir
- * @param differentDomains
- * @returns {Array}
  */
 exports.makeRoutes = (baseRoutes, {
   locales,
@@ -26,8 +15,6 @@ exports.makeRoutes = (baseRoutes, {
   routesNameSeparator,
   defaultLocaleRouteNameSuffix,
   strategy,
-  pages,
-  pagesDir,
   differentDomains
 }) => {
   locales = getLocaleCodes(locales)
@@ -35,23 +22,12 @@ exports.makeRoutes = (baseRoutes, {
 
   const buildLocalizedRoutes = (route, routeOptions = {}, isChild = false) => {
     const routes = []
-    const pageOptions = getPageOptions(route, pages, locales, pagesDir)
 
     // Component's specific options
     const componentOptions = {
       locales,
-      ...pageOptions,
+      // ...pageOptions,
       ...routeOptions
-    }
-    // Double check locales to remove any locales not found in pageOptions
-    // This is there to prevent children routes being localized even though
-    // they are disabled in the configuration
-    if (
-      typeof componentOptions.locales !== 'undefined' && componentOptions.locales.length > 0 &&
-      typeof pageOptions.locales !== 'undefined' && pageOptions.locales.length > 0) {
-      componentOptions.locales = componentOptions.locales.filter(locale => (
-        pageOptions.locales.indexOf(locale) !== -1
-      ))
     }
 
     // Generate routes for component's supported locales

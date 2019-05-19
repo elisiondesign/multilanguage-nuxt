@@ -10,7 +10,7 @@ import {
   LOCALE_DOMAIN_KEY,
   LOCALE_FILE_KEY,
   STRATEGIES
-} from './helpers/constants'
+} from './constants'
 
 const { resolve, join } = require('path')
 const { readdirSync } = require('fs')
