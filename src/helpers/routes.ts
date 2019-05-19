@@ -2,30 +2,32 @@ import {
   MODULE_NAME,
   STRATEGIES
 } from '../constants'
-import { getLocaleCodes } from './utils'
+import getLocaleCodes from './utils'
+import NuxtRoute from '@@/@types/nuxt-types/IRoutes'
+import ModuleOptions from '@@/@types/multilanguage-nuxt/IModuleOptions.d';
 
 /**
  * Extend Nuxt's array of routes with localized urls
  * For each of the available locale, generate a locale prefixed route
  * Depending on the strategy configuration, the prefixed route for default language may or may not exist
  */
-export const makeRoutes = (baseRoutes, {
+export const makeRoutes = (baseRoutes: Array<NuxtRoute>, {
   locales,
   defaultLocale,
   routesNameSeparator,
   defaultLocaleRouteNameSuffix,
   strategy,
-  differentDomains
-}) => {
-  locales = getLocaleCodes(locales)
+}: ModuleOptions) => {
+  debugger
+  const localeCodes = getLocaleCodes(locales)
   let localizedRoutes = []
 
-  const buildLocalizedRoutes = (route, routeOptions = {}, isChild = false) => {
+  const buildLocalizedRoutes = (route, routeOptions: any = {}, isChild: boolean = false) => {
     const routes = []
 
     // Component's specific options
     const componentOptions: any = {
-      locales,
+      locales: localeCodes,
       ...routeOptions
     }
 
@@ -38,7 +40,7 @@ export const makeRoutes = (baseRoutes, {
       const localizedRoute = { ...route }
 
       // Skip if locale not in module's configuration
-      if (locales.indexOf(locale) === -1) {
+      if (localeCodes.indexOf(locale) === -1) {
         // eslint-disable-next-line
         console.warn(`[${MODULE_NAME}] Can't generate localized route for route '${name}' with locale '${locale}' because locale is not in the module's configuration`)
         continue
@@ -64,7 +66,6 @@ export const makeRoutes = (baseRoutes, {
       // Add route prefix if needed
       const shouldAddPrefix = (
         // No prefix if app uses different locale domains
-        !differentDomains &&
         // Only add prefix on top level routes
         !isChild &&
         // Skip default locale if strategy is PREFIX_EXCEPT_DEFAULT
@@ -90,7 +91,7 @@ export const makeRoutes = (baseRoutes, {
 
   for (let i = 0, length1 = baseRoutes.length; i < length1; i++) {
     const route = baseRoutes[i]
-    localizedRoutes = localizedRoutes.concat(buildLocalizedRoutes(route, { locales }))
+    localizedRoutes = localizedRoutes.concat(buildLocalizedRoutes(route, { locales: localeCodes }))
   }
 
   return localizedRoutes

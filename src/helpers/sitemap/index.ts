@@ -1,6 +1,6 @@
 import DirectusSitemap from './directus'
 import { SITEMAP_SOURCES } from '../../constants';
-import { getLocaleCodes } from './../utils';
+import getLocaleCodes from '../utils';
 
 export const makeSitemapRoutesAsync = async (options) => {
   const appPages = options.pages;
@@ -11,7 +11,8 @@ export const makeSitemapRoutesAsync = async (options) => {
   let sitemapRoutes = [];
 
   if (config.source === SITEMAP_SOURCES.DIRECTUS_7) {
-    sitemapRoutes = await new DirectusSitemap(appPages, locales, defaultLocale, config).getAppRoutes();
+    sitemapRoutes = await new DirectusSitemap(appPages, locales, defaultLocale, config)
+                      .getAppRoutes();
   }
 
   if (typeof(config.source) === 'function') {
