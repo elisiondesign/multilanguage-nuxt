@@ -1,9 +1,8 @@
 import DirectusSitemap from './directus'
 import { SITEMAP_SOURCES } from '../../constants';
+import { getLocaleCodes } from './../utils';
 
-const { getLocaleCodes } = require('../utils')
-
-exports.makeSitemapRoutesAsync = async (options) => {
+export const makeSitemapRoutesAsync = async (options) => {
   const appPages = options.pages;
   const config = options.sitemap;
   const defaultLocale = options.defaultLocale;
