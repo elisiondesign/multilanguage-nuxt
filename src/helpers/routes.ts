@@ -26,7 +26,7 @@ export const makeRoutes = (baseRoutes: Array<NuxtRoute>, {
 
   const buildLocalizedRoutes = (route: NuxtRoute, routeOptions: any = {}, isChild: boolean = false) => {
     const routes: Array<NuxtRoute> = []
-    const pageOptions = getPageOptions(route, pages, locales, pagesDir)
+    const pageOptions = getPageOptions(route, pages, localeCodes, pagesDir)
 
     debugger
     // Component's specific options

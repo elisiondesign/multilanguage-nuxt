@@ -1,5 +1,7 @@
 import { LOCALE_CODE_KEY } from '../constants'
 import Locale from '@@/@types/multilanguage-nuxt/ILocales';
+import NuxtRoute from '@@/@types/nuxt-types/IRoutes';
+import IPageOptions from '@@/@types/multilanguage-nuxt/IPageOptions.d';
 
 /**
  * Get an array of locale codes from a list of locales
@@ -28,9 +30,9 @@ export default function getLocaleCodes (locales: Array<Locale> | Array<string> =
  * @param  {String} pagesDir Pages dir from Nuxt's configuration
  * @return {Object}          Page options
  */
-export function getPageOptions (route, pages, locales, pagesDir) {
-  const options = {
-    locales: getLocaleCodes(locales),
+export function getPageOptions (route: NuxtRoute, pages: any, locales: Array<string>, pagesDir: string) {
+  const options: IPageOptions = {
+    locales,
     paths: {}
   }
   const pattern = new RegExp(`${pagesDir}/`, 'i')
