@@ -1,4 +1,4 @@
-export const nuxtI18nSeo = function () {
+export default function nuxt$i18nSeo() {
     const COMPONENT_OPTIONS_KEY = '<%= options.COMPONENT_OPTIONS_KEY %>'
     const configIncorrect = configurationIncorrect.call(this, COMPONENT_OPTIONS_KEY);
 
@@ -24,24 +24,23 @@ export const nuxtI18nSeo = function () {
       htmlAttrs.lang = currentLocaleData[LOCALE_ISO_KEY]
     }
   
-    const link = []
+    let link = []
     
     // hreflang tags
     if (generateAlternate) {
-      link.concat(generateAlternateAttrs.call(this, LOCALE_CODE_KEY, BASE_URL))
+      link = link.concat(generateAlternateAttrs.call(this, LOCALE_CODE_KEY, BASE_URL))
     }
 
   
     // canonical links
     if (STRATEGY === '<%= options.STRATEGIES.PREFIX_AND_DEFAULT %>' && generateCanonical) {
-      link.concat(generateCanonicalAttrs.call(this, currentLocaleData, LOCALE_CODE_KEY, BASE_URL))
+      link = link.concat(generateCanonicalAttrs.call(this, currentLocaleData, LOCALE_CODE_KEY, BASE_URL))
     }
-  
     // og:locale meta
-    const meta = []
+    let meta = []
     // og:locale - current
     if (currentLocaleData && currentLocaleData[LOCALE_ISO_KEY] && generateOg) {
-      meta.concat(generateOgAttrs.call(this, currentLocaleData, LOCALE_ISO_KEY))
+      meta = meta.concat(generateOgAttrs.call(this, currentLocaleData, LOCALE_ISO_KEY))
     }
 
     return {

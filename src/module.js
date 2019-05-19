@@ -59,8 +59,8 @@ module.exports = function (moduleOptions) {
   const pluginsPath = join(__dirname, PLUGINS_DIR)
   const templatesPath = join(__dirname, TEMPLATES_DIR)
 
-  // Add plugins
-  for (const pluginName of ['main', 'routing', 'seo']) {
+  // Add pre-template plugins
+  for (const pluginName of ['main', 'routing']) {
     this.addPlugin({
       src: resolve(pluginsPath, `${pluginName}.js`),
       fileName: join(ROOT_DIR, `plugin.${pluginName}.js`),
@@ -73,6 +73,15 @@ module.exports = function (moduleOptions) {
     this.addTemplate({
       src: resolve(templatesPath, templatePath),
       fileName: join(ROOT_DIR, `templates.${templatePath}`),
+      options: templatesOptions
+    })
+  }
+
+  // Add post-template plugins
+  for (const pluginName of ['seo']) {
+    this.addPlugin({
+      src: resolve(pluginsPath, `${pluginName}.js`),
+      fileName: join(ROOT_DIR, `plugin.${pluginName}.js`),
       options: templatesOptions
     })
   }
