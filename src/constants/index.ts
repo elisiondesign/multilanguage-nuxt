@@ -11,7 +11,9 @@ export const HELPERS_PATH = 'helpers/'
 export const PLUGINS_DIR = 'plugins/'
 export const TEMPLATES_DIR = 'templates/'
 export const LOCALE_CODE_KEY = 'code'
+export const COMPONENT_OPTIONS_KEY = 'nuxtI18n'
 export const LOCALE_ISO_KEY = 'iso'
+export const NESTED_OPTIONS = ['detectBrowserLanguage', 'vuex']
 
 // Options
 export const STRATEGIES = {
@@ -20,8 +22,7 @@ export const STRATEGIES = {
   PREFIX_AND_DEFAULT: 'prefix_and_default'
 }
 
-
-export const COMPONENT_OPTIONS_KEY = 'nuxtI18n'
+// Module defaults
 export const DEFAULT_OPTIONS = {
   vueI18n: {},
   locales: [],
@@ -50,4 +51,3 @@ export const DEFAULT_OPTIONS = {
   beforeLanguageSwitch: () => null,
   onLanguageSwitched: () => null
 }
-export const NESTED_OPTIONS = ['detectBrowserLanguage', 'vuex']

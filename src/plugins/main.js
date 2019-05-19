@@ -3,7 +3,11 @@ import VueI18n from 'vue-i18n';
 
 Vue.use(VueI18n)
 
-export default async ({ app, route, store, req }, inject) => {
+/**
+ * Initiate Vuex store with VueI18n configuration and its methods
+ * Add custom modification to the Vue's instance
+ */
+export default async ({ app, store }) => {
   // Options
   const vuex = <%= JSON.stringify(options.vuex) %>
 
@@ -33,13 +37,12 @@ export default async ({ app, route, store, req }, inject) => {
 
   // Sync Vuex
   syncVuex(vuex, store, locale, app.i18n.getLocaleMessage(locale))
-
 }
 
 /**
  * Generate new Vuex instance
- * @param store
- * @param vuex
+ * @param store Vuex store
+ * @param vuex Vuex instance
  */
 function registerStoreModule(store, vuex) {
   store.registerModule(vuex.moduleName, {
@@ -71,7 +74,6 @@ function registerStoreModule(store, vuex) {
  * Dispatch store module actions to keep it in sync with app's locale data
  * @param  {String} locale   Current locale
  * @param  {Object} messages Current messages
- * @return {void}
  */
 function syncVuex (vuex, store, locale = null, messages = null) {
   if (vuex && store) {

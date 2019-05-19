@@ -7,9 +7,8 @@ const routesNameSeparator = '<%= options.routesNameSeparator %>'
  * Override Vuei18n 'localePath' function
  * Prefix nuxt link with locale
  *
- * @param i18nPath
- * @param routerPath
- * @returns {function(*=, *=): *}
+ * @param i18nPath   reference to i18n's attribute
+ * @param routerPath current app's path
  */
 function localePathFactory (i18nPath, routerPath) {
   const STRATEGIES = <%= JSON.stringify(options.STRATEGIES) %>
@@ -18,8 +17,6 @@ function localePathFactory (i18nPath, routerPath) {
   const defaultLocaleRouteNameSuffix = '<%= options.defaultLocaleRouteNameSuffix %>'
 
   return function localePath (route, locale) {
-    debugger;
-
     // Abort if no route or no locale
     if (!route) return
     locale = locale || this[i18nPath].locale
@@ -81,19 +78,23 @@ function switchLocalePathFactory () {
 }
 
 /**
- * Retreive basename from path string
+ * Retreive basename from path
  *
- * @param contextRoute
- * @returns {getRouteBaseName}
+ * @param contextRoute current route
  */
 function getRouteBaseNameFactory (contextRoute) {
 
-  const routeGetter  = contextRoute ? route => route || contextRoute :
-  function (route) {
-    return route || this.$route
+  let routeGetter
+  if (contextRoute) {
+    routeGetter = route => route
+  } else {
+    routeGetter = function (route) {
+      return route || this.$route
+    }
   }
 
   return function getRouteBaseName (route) {
+    // Using call to pass correct 'this' reference
     route = routeGetter.call(this, route)
     if (!route.name) {
       return null

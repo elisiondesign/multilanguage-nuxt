@@ -5,7 +5,6 @@ import {
 import getLocaleCodes, {getPageOptions} from './utils'
 import NuxtRoute from '@@/@types/nuxt-types/IRoutes'
 import ModuleOptions from '@@/@types/multilanguage-nuxt/IModuleOptions.d';
-import { ComponentOptions } from '@@/@types/nuxt-types';
 
 /**
  * Extend Nuxt's array of routes with localized urls
@@ -28,7 +27,6 @@ export const makeRoutes = (baseRoutes: Array<NuxtRoute>, {
     const routes: Array<NuxtRoute> = []
     const pageOptions = getPageOptions(route, pages, localeCodes, pagesDir)
 
-    debugger
     // Component's specific options
     const componentOptions: any = {
       locales: localeCodes,
@@ -65,7 +63,6 @@ export const makeRoutes = (baseRoutes: Array<NuxtRoute>, {
 
       // Get custom path if any
       if (componentOptions.paths && componentOptions.paths[locale]) {
-        debugger
         path = componentOptions.paths[locale]
       }
 

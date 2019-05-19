@@ -1,14 +1,27 @@
 import DirectusSDK from '@directus/sdk-js';
 import Sitemap, {SitemapMapping} from '@@/@types/multilanguage-nuxt/ISitemap';
+import CustomPaths from '@@/@types/multilanguage-nuxt/ICustomPaths';
 
+/**
+ * Directus CMS manager
+ * Constructs localized routes array in a SEO-friendly way for the sitemap module
+ */
 export default class DirectusSitemap {
   api: DirectusSDK
-  appPages: any
+  appPages: Array<CustomPaths>
   config: Sitemap
   defaultLocale: string
   locales: Array<string>
 
-  constructor(appPages, locales: Array<string>, defaultLocale: string, config: Sitemap) {
+  /**
+   * Initiates configuration for the API communicatio
+  * 
+  * @param appPages Array of translated app pages
+  * @param locales Targeted locale codes
+  * @param defaultLocale Default locale code
+  * @param config Sitemap's configuration
+  */
+  constructor(appPages: Array<CustomPaths>, locales: Array<string>, defaultLocale: string, config: Sitemap) {
     this.appPages = appPages;
     this.config = config;
     this.locales = locales;
@@ -16,6 +29,11 @@ export default class DirectusSitemap {
     this.api = this.configureApi(config.url, config.project)
   }
 
+  /**
+   * Establish connection to Directus
+   * @param url Directus' url
+   * @param project Target project in multiproject environment
+   */
   private configureApi(url: string, project: string) {
     return new DirectusSDK({
       url,
@@ -23,6 +41,14 @@ export default class DirectusSitemap {
     })
   }
 
+  /**
+   * Fetch entry from directus and get the targeted field for translation
+   *  
+   * @param tableName Directus' targeted table
+   * @param field Targeted field in table
+   * @param outer Whether to take field from the outside relation or the translated inner relation
+   *              For instance. Project has translated title, but url is common for all of them => title is inner, url is outer
+   */
   private async getApiTranslationsAsync(tableName: string, field: string, outer: boolean) {
     const output = {}
 
@@ -37,10 +63,13 @@ export default class DirectusSitemap {
           }
         })
       }))
-  
+
     return output
   }
 
+  /**
+   * Queue fetch and translation for later
+   */
   private prepareTranslationsAsync() {
     const mappings = this.config.mappings
     return mappings.map(async (mapping) => {
@@ -53,13 +82,20 @@ export default class DirectusSitemap {
     })
   }
 
+  /**
+   * Exclude any locales that are present in Directus, but not supported in the application
+   * 
+   * @param translations 
+   */
   private filterAllowedTranslations(translations) {
     return translations.map(translation => {
       const obj = {};
       Object.entries(translation).forEach(entry => {
-        const localeAllowed = this.locales.includes(entry[0])
+        const code = entry[0];
+        const content = entry[1]
+        const localeAllowed = this.locales.includes(code)
         if(localeAllowed) {
-          obj[entry[0]] = entry[1];
+          obj[code] = content;
         }
       })
 
@@ -67,22 +103,30 @@ export default class DirectusSitemap {
     })
   }
 
+  /**
+   * Localize each nuxt page with dynamic part
+   * The dynamic part is replaced by the targeted field from directus
+   * 
+   * @param nuxtPath Nuxt's path
+   * @param locale Targeted locale code
+   * @param mapping Configuration for the given path
+   * @param translation Translations for the given path
+   */
   private localizeRoute(
     nuxtPath: string,
     locale: string,
     mapping: SitemapMapping,
-    translation: Array<any>) {
+    translation: Array<any>
+  ) {
     const route = {
       url: '',
       links: []
     }
 
     if (nuxtPath.includes(mapping.nuxtPage) && nuxtPath.includes(mapping.dynamicRoute)) {
-      
       Object.entries(translation).forEach(entry => {
         const code = entry[0];
         const content = entry[1];
-
         content.forEach(path => {
           if (code === this.defaultLocale) {
             route.url = code;
@@ -96,6 +140,11 @@ export default class DirectusSitemap {
     return route;
   }
 
+  /**
+   * Prepare localized routes for the sitemap's module
+   * 
+   * @param translations 
+   */
   private prepareLocalizedRoutes(translations) {
     const mappings = this.config.mappings
     let routes = []
@@ -109,16 +158,20 @@ export default class DirectusSitemap {
         const locale = this.locales[j]
         const localizedRoutes = this.localizeRoute(nuxtPath, locale, mapping, translation)
         routes = routes.concat(localizedRoutes)
+        }
       }
-    }
-  })
+    })
 
     return routes
   }
 
-  async getAppRoutes() {
+  /**
+   * Proccess supported locale and mapping in the configuration,
+   * return array of sitemap routes
+   */
+  async getAppRoutesAsync() {
     const apiPool = this.prepareTranslationsAsync();
-    let translations = await Promise.all(apiPool); // Promise here returns a single item array
+    let translations = await Promise.all(apiPool);
     translations = this.filterAllowedTranslations(translations)
     const localizedRoutes = this.prepareLocalizedRoutes(translations)
 

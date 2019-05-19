@@ -7,8 +7,6 @@ import {
   MODULE_NAME,
   LOCALE_CODE_KEY,
   LOCALE_ISO_KEY,
-  LOCALE_DOMAIN_KEY,
-  LOCALE_FILE_KEY,
   STRATEGIES
 } from './constants'
 
@@ -39,10 +37,7 @@ module.exports = function (moduleOptions) {
     MODULE_NAME,
     LOCALE_CODE_KEY,
     LOCALE_ISO_KEY,
-    LOCALE_DOMAIN_KEY,
-    LOCALE_FILE_KEY,
-    STRATEGIES,
-    isSpa: this.options.mode === 'spa'
+    STRATEGIES
   }
 
   const pagesDir = this.options.dir && this.options.dir.pages ? this.options.dir.pages : 'pages'
@@ -57,6 +52,7 @@ module.exports = function (moduleOptions) {
     routes.unshift(...localizedRoutes)
   })
 
+  // Prepare routes for sitemap module and pass it the resolution promise-based function
   const sitemapRoutes = makeSitemapRoutesAsync(options)
   this.requireModule(['@nuxtjs/sitemap', { routes() { return sitemapRoutes } }])
 
@@ -81,6 +77,7 @@ module.exports = function (moduleOptions) {
     })
   }
 
+  // Register i18n middleware, defined in middleware template
   this.options.router.middleware.push('i18n')
 }
 

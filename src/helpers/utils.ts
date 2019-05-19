@@ -5,8 +5,8 @@ import IPageOptions from '@@/@types/multilanguage-nuxt/IPageOptions.d';
 
 /**
  * Get an array of locale codes from a list of locales
- * @param  {Array}  locales Locales list from nuxt config
- * @return {Array}          List of locale codes
+ * @param  locales Locales list from nuxt config
+ * @return         List of locale codes
  */
 export default function getLocaleCodes (locales: Array<Locale> | Array<string> = []): Array<string>  {
   if (locales.length) {
@@ -22,14 +22,14 @@ export default function getLocaleCodes (locales: Array<Locale> | Array<string> =
   return []
 }
 
-/**
- * Retrieve page's options from the module's configuration for a given route
- * @param  {Object} route    Route
- * @param  {Object} pages    Pages options from module's configuration
- * @param  {Array} locales   Locale from module's configuration
- * @param  {String} pagesDir Pages dir from Nuxt's configuration
- * @return {Object}          Page options
- */
+ /**
+  * Retrieve page's options from the module's configuration for a given route
+  * 
+  * @param route    Pages options from module's configuration
+  * @param pages    Locale from module's configuration
+  * @param locales  Pages dir from Nuxt's configuration
+  * @param pagesDir Page options
+  */
 export function getPageOptions (route: NuxtRoute, pages: any, locales: Array<string>, pagesDir: string) {
   const options: IPageOptions = {
     locales,

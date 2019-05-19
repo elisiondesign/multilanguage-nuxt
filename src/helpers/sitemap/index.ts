@@ -1,26 +1,37 @@
 import DirectusSitemap from './directus'
-import { SITEMAP_SOURCES } from '../../constants';
+import { SITEMAP_SOURCES, MODULE_NAME } from '../../constants';
 import getLocaleCodes from '../utils';
+import CustomPaths from '@@/@types/multilanguage-nuxt/ICustomPaths.d';
+import ModuleOptions from '@@/@types/multilanguage-nuxt/IModuleOptions.d';
+import Sitemap from '@@/@types/multilanguage-nuxt/ISitemap.d';
 
-export const makeSitemapRoutesAsync = async (options) => {
-  const appPages = options.pages;
-  const config = options.sitemap;
-  const defaultLocale = options.defaultLocale;
-  const locales = getLocaleCodes(options.locales);
+/**
+ * Handles sitemap routes preparation based on module's configuration
+ * 
+ * @param options module's configuration options
+ */
+export const makeSitemapRoutesAsync = async (options: ModuleOptions) => {
+  const appPages: Array<CustomPaths> = options.pages;
+  const config: Sitemap = options.sitemap;
+  const defaultLocale: string = options.defaultLocale;
+  const locales: Array<string> = getLocaleCodes(options.locales);
 
   let sitemapRoutes = [];
 
-  if (config.source === SITEMAP_SOURCES.DIRECTUS_7) {
-    sitemapRoutes = await new DirectusSitemap(appPages, locales, defaultLocale, config)
-                      .getAppRoutes();
+  switch(config.source) {
+    case SITEMAP_SOURCES.DIRECTUS_7:
+        sitemapRoutes = await new DirectusSitemap(appPages, locales, defaultLocale, config)
+          .getAppRoutesAsync();
+        break;
   }
 
+  // In case the source is a custom function
   if (typeof(config.source) === 'function') {
     sitemapRoutes = await config.source()
   }
 
   if (sitemapRoutes.length === 0) {
-    console.warn('Could not generate any routes for sitemap. Please consult your configuration with the documentation');
+    console.warn(`[${MODULE_NAME}] Could not generate any routes for sitemap. Please consult your configuration with the documentation`);
   }
   
   return sitemapRoutes
